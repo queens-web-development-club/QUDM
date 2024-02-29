@@ -1,0 +1,93 @@
+body {
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
+    font-family: "Roboto", sans-serif;
+    background-color: #fefae0;
+    overflow: auto;
+    color: #000;
+    height: 1280px;
+    max-height: 2000px;
+
+}
+
+
+.main{
+    padding: 9rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: "Barlow Condensed", sans-serif;
+   
+}
+
+.figure{
+    display: block;
+    cursor: pointer;
+    background-color: var(--color);
+    letter-spacing: 0.01rem;
+    border: 2px solid #111;
+    font-size: 24px;
+    font-weight: 700;
+    box-shadow: 5px 5px 0 1px #111;
+
+}
+
+/* .bottom-div {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px; 
+    background-color: #f0f0f0;
+
+  } */
+
+.figure-image{
+    overflow: hidden;
+    position: relative;
+    background-color: red;
+    aspect-ratio: 1;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.fadein {
+	animation-name: fadein;
+	animation-fill-mode: both;
+	animation-duration: 300ms;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes fadein {
+	0% {
+		opacity: 0;
+		transform: translateY(50%);
+	}
+	
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.fadeout {
+    animation-name: fadeout;
+    animation-fill-mode: both;
+    animation-duration: 300ms;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    100% {
+        opacity: 0;
+        transform: translateY(-50%);
+    }
+}
