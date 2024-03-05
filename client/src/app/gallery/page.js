@@ -1,5 +1,7 @@
-import '../src/app/css/gallery.css';
-import Nav from "../src/app/components/nav.js"; 
+"use client"
+
+import './gallery.css';
+import Nav from "../components/nav/nav.js"; 
 import React, { useState, useEffect, useRef } from 'react';
 
 const imageUrls = [
@@ -39,12 +41,16 @@ export default function Gallery() {
 
     const handleScroll = () => {
         const scrollPosition = window.scrollY;
+        
         const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
+        
+
     
         const remainingScroll = documentHeight - (scrollPosition + windowHeight);
-        const threshold = 200; 
-    
+        const threshold = 100; 
+        console.log(remainingScroll)
+        console.log(threshold)
         if (remainingScroll < threshold) {
             setVisibleImages(prevVisibleImages => prevVisibleImages + 4);
         }

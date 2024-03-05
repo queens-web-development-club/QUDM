@@ -17,7 +17,7 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 2rem;
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
     font-family: "Barlow Condensed", sans-serif;
    
@@ -26,7 +26,6 @@ body {
 .figure{
     display: block;
     cursor: pointer;
-    background-color: var(--color);
     letter-spacing: 0.01rem;
     border: 2px solid #111;
     font-size: 24px;

@@ -1,0 +1,193 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+  
+:root {
+    --primary-color: #4891ff;
+    --light-color: #f4f4f6;
+    --dark-color: #111;
+}
+  
+body {
+    font-family: 'Poppins';
+    font-size: 16px;
+    line-height: 1.5;
+    background: #fff;
+}
+  
+a {
+    text-decoration: none;
+    color: #333;
+}
+  
+ul {
+    list-style: none;
+}
+  
+img {
+    max-width: 100%;
+    height: 100px;
+    width: 125px;
+}
+  
+/* Navbar */
+  
+.navbar {
+    background: #fff;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; 
+}
+  
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+  
+.navbar .main-menu ul {
+    display: flex;
+}
+  
+.navbar ul li a {
+    padding: 10px 20px;
+    display: block;
+    font-weight: 600;
+    transition: 0.5s;
+}
+  
+.navbar ul li a:hover {
+    color: var(--primary-color);
+  
+.navbar ul li a i {
+    margin-right: 10px;
+}
+  
+.navbar ul li:last-child a {
+    margin-left: 10px;
+}
+  
+/* Utility Classes */
+  
+.container {
+    max-width: 1100px;
+    padding: 0 15px;
+}
+  
+.small-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+  
+/* Buttons! */
+  
+.btn {
+    display: inline-block;
+    padding: 13px 20px;
+    background: var(--light-color);
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+  
+.btn:hover {
+    opacity: 0.8;
+}
+  
+.btn-primary {
+    background: var (--primary-color);
+    color: #fff;
+}
+  
+.btn-dark {
+    background: var (--dark-color);
+    color: #fff;
+}
+  
+.btn-block {
+    display: block;
+    width: 100%;
+}}
+  
+  
+/* Miscellaneous */
+  
+.title {
+    font-family: 'Moon Dance';
+    font-size: 80px;
+    display: block;
+    margin: 120px auto 0; 
+    width: 50%;
+    transition: 0.5s;
+}
+  
+.title-text {
+    font-size: 40px;
+}
+
+
+/* old nav (owen)
+
+.nav {
+    width: 100%;
+    height: 65px;
+    position: fixed;
+    top: 0; 
+    line-height: 65px;
+    text-align: left;
+    z-index: 1000;
+    background-color: #F7F2F4;
+    transition: all 0.4s ease;
+
+}
+
+.logo {
+    float: left;
+    padding-left: 3rem;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+
+ul li {
+    margin: 0;
+    padding: 0;
+    padding-right: 3rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.4rem;
+}
+
+ul li a:hover {
+    color: #F8AD9D;
+}
+
+.nav.fixed {
+    position: fixed;
+
+} */
