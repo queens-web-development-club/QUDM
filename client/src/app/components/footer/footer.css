@@ -1,0 +1,17 @@
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    width:100%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center; /*Center content horizontally*/
+}
+
+.logo-img /*use for footer logo sizing*/{
+    margin-left:10px;
+    width: 24px;
+    height: 24px;
+}

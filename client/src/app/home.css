@@ -2,39 +2,67 @@
     display: flex;
     justify-content: center;
 }
-  
+
 .about-container {
     max-width: 1600px;
     max-height: 500px;
     width: 100%;
+    display: flex;
 }
-  
+
 .about-content {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
+    display: flex;
+    flex: 1;
+}
+
+.left /*Left main Box*/{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.right /*Righ main Box*/{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-right /*Right -> Top Sub-box*/{
+    flex: 0 0 auto;
+    height: 70%; /*Take up top 70% of space*/
 }
   
+.bottom-right/*Right -> Bottom Sub-box*/ {
+    flex: 0 0 auto;
+    height: 30%; /*take up bottom 30% of space */
+}
+
 .image-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    max-height: 500px;
 }
 
 .image-container img {
     width: 100%;
     height: auto;
-    max-height: 500px;
+    max-height: 100%;
 }
 .text-container {
     align-self: flex-start;
+    padding: 20px; 
 }
+
 .image-gallery {
     display: flex;
-    justify-content: space-between; /* Distribute items evenly along the main axis */
-    align-items: flex;
+    justify-content: space-between; /*Distribute items evenly along the main axis*/
+    margin-top: 1px; /*Space between paragraph and staff imgs*/
+    margin-left: 20px;
+    gap: 10px;/*minimum gap restriction between images*/
 }
-  
+
 .image-gallery img {
-    margin-right: 10px;
+    width: 115px;
+    height: 115px;
 }
