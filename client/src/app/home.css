@@ -1,0 +1,40 @@
+.about-section {
+    display: flex;
+    justify-content: center;
+}
+  
+.about-container {
+    max-width: 1600px;
+    max-height: 500px;
+    width: 100%;
+}
+  
+.about-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+  
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+}
+.text-container {
+    align-self: flex-start;
+}
+.image-gallery {
+    display: flex;
+    justify-content: space-between; /* Distribute items evenly along the main axis */
+    align-items: flex;
+}
+  
+.image-gallery img {
+    margin-right: 10px;
+}
