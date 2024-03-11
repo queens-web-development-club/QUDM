@@ -2,24 +2,70 @@ import Image from "next/image";
 import Nav from "./components/nav/nav.js";
 import Footer from "./components/footer/footer.js";
 import './home.css';
+
+
+
 export default function Home() {
   return (
     <div>
 
       <Nav/>
       {/*TITLE SECTION*/}
-      <section className="title">
-        <div className="container">
-          <div className="title-container">
-            <h1 className="title-text-xxl">Queen's Dance Marathon</h1>
-            <p className="title-text">Dancing for Miracles, Moving for a Cause!</p>
-          </div>
+      <section class="title">
+        <div class="title-container">
+            <div class="header">Queen's Dance Marathon</div>
+            <div class="subheader">Dancing for Miracles, Moving for a Cause!</div>
         </div>
       </section>
       {/*END OF TITLE SECTION*/}
 
       {/*EVENT SECTION (blank space placeholder, remove it as needed Thomas)*/}
-      <div style={{ height: '900px' }} />
+
+      <div class="main-frame">
+        <div class="left-grid">
+
+          <div class="left-title">
+            <span class="our-events">OUR EVENTS</span>
+          </div>
+
+
+          <div class="our-events-message">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div class="events-button-container">
+            
+            <button class="cssbuttons-io-button">
+              Learn More
+              <div class="icon">
+                <svg
+                  height="24"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+                  <path
+                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+          </div>
+
+        </div>
+        <div class="right-grid">
+          <div class="right-grid-image">
+            <div class="image-container">
+              <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Blank Image" width={500} height={250} />
+            </div>
+          </div>
+        </div>
+        
+        
+      </div>
       {/*END OF EVENT SECTION*/}
 
       {/*ABOUT SECTION*/}
@@ -59,7 +105,6 @@ export default function Home() {
     {/*END OF ABOUT SECTION*/}
 
     {/*FOOTER SECTION*/}
-    <div style={{ height: '200px' }} />
     <Footer/>
     {/*FOOTER SECTION*/}
     </div>
