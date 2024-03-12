@@ -27,6 +27,9 @@ const Navbar = () => {
                   <a href="/gallery">Gallery</a>
                 </li>
                 <li>
+                  <a href="/blog">Blog</a>
+                </li>
+                <li>
                   <a className="btn" href="#">
                     <i className="fas fa-user"></i> Donate
                   </a>

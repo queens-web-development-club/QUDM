@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-bottom: 10px;
+}  
+
+main {
+    padding: 100px;
+    margin-top: 50px;
+}
+
+img {
+    margin: 5px;
+}
+
+.test-img {
+    background-color: #ddd;
+}
+
+.blog-post {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.blog-post h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.blog-post p {
+    line-height: 1.5;
+}
+
+.post-info {
+    font-size: 0.8em;
+    color: #999;
+    margin-top: 10px;
+}
+
+.author {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+
