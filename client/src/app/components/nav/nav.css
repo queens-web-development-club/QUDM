@@ -29,10 +29,40 @@ ul {
 img {
     max-width: 100%;
     height: 100px;
-    width: 125px;
+    width: 140px;
 }
-  
-/* Navbar */
+
+.overlay-image {
+    position: absolute; 
+    top: -20; 
+    left: -5;
+    height: 100px;
+    width: 140px;
+    background-image: url('/images/logo/candle.png'); 
+    background-size: contain; 
+    background-repeat: no-repeat; 
+    background-size: contain;
+    transition: all 0.3s ease;
+}
+
+.overlay-image:hover {
+    animation: glowAnimation 1s infinite; 
+}
+
+@keyframes glowAnimation {
+    0% {
+      filter: drop-shadow(0 0 5px rgb(245, 194, 99)); 
+    }
+    50% {
+      filter: drop-shadow(0 0 10px rgba(255, 165, 0, 0.8)); 
+    }
+    100% {
+      filter: drop-shadow(0 0 5px rgba(255, 165, 0, 0.5)); 
+    }
+}
+
+
+
   
 .navbar {
     background: #fff;
@@ -135,6 +165,8 @@ img {
 .title-text {
     font-size: 40px;
 }
+
+
 
 
 /* old nav (owen)

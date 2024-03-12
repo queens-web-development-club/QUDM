@@ -11,6 +11,7 @@ const Navbar = () => {
             <div className="logo">
               <a href="/">
               <img src="images/logo/QUDM-logo.png" alt="logo" />
+              {/* <div className = 'overlay-image'/> This is the glowy logo */} 
               </a>
             </div>
     
