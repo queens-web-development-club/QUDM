@@ -69,6 +69,7 @@
     justify-content: center;
     align-items: center;
     max-height: 400px;
+    position:relative;
 }
 
 
@@ -94,8 +95,30 @@
 }
 
 .image-gallery img {
+    border-radius: 50%;
+    object-fit:cover;
     width: 115px;
     height: 115px;
+}
+
+.image-gallery img:hover{
+    filter:brightness(0.2);
+}
+
+.image-gallery:hover .image-text{
+    opacity:1;
+}
+.image-text {
+    position: absolute; /* Absolutely position the text relative to its container */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center the text perfectly */
+    color: white;
+    pointer-events: none;/*So it doesn't disrupt the opacity effect*/
+    font-size: 14px;
+    font-weight: bold;
+    opacity: 0.0; /* Initially hide text */
+    transition: opacity 0.3s; /* Smooth transition for opacity changes */
 }
 
 
