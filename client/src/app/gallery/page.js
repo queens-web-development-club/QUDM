@@ -1,79 +1,130 @@
 "use client"
 
 import './gallery.css';
-import Nav from "../components/nav/nav.js"; 
-import React, { useState, useEffect, useRef } from 'react';
+import Nav from "../components/nav/nav.js";
+import Image from "next/image";
+import Footer from "../components/footer/footer.js";
+import React, { useState } from 'react';
 
-const imageUrls = [
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
-    { url: 'https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50' },
 
+
+const imageSrcs = [
+  { src: 'images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG' },
+  { src: 'images/gallery/IMG_0340.JPG' },
+  { src: 'images/gallery/IMG_0343.JPG' },
+  { src: 'images/gallery/IMG_0345.JPG' },
+  { src: 'images/gallery/IMG_0347.JPG' },
+  { src: 'images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG' },
+  { src: 'images/gallery/IMG_0340.JPG' },
+  { src: 'images/gallery/IMG_0343.JPG' },
+  { src: 'images/gallery/IMG_0345.JPG' },
+  { src: 'images/gallery/IMG_0347.JPG' },
+  { src: 'images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG' },
+  { src: 'images/gallery/IMG_0340.JPG' },
+  { src: 'images/gallery/IMG_0343.JPG' },
+  { src: 'images/gallery/IMG_0345.JPG' },
+  { src: 'images/gallery/IMG_0347.JPG' },
+  { src: 'images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG' },
+  { src: 'images/gallery/IMG_0340.JPG' },
+  { src: 'images/gallery/IMG_0343.JPG' },
+  { src: 'images/gallery/IMG_0345.JPG' },
+  { src: 'images/gallery/IMG_0347.JPG' },
 ];
 
 export default function Gallery() {
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    const [visibleImages, setVisibleImages] = useState(8);
+  const handleImageClick = (index) => {
+    setCurrentImageIndex(index);
+    setIsLightboxOpen(true);
+  };
 
-    const handleScroll = () => {
-        const scrollPosition = window.scrollY;
-        
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
-        
+  const handleLightboxClose = (e) => {
+    // Check if the click event target is the backdrop or one of its children
+    if (e.target.classList.contains('lightbox-backdrop')) {
+      setIsLightboxOpen(false);
+    }
+  };
 
-    
-        const remainingScroll = documentHeight - (scrollPosition + windowHeight);
-        const threshold = 100; 
-        console.log(remainingScroll)
-        console.log(threshold)
-        if (remainingScroll < threshold) {
-            setVisibleImages(prevVisibleImages => prevVisibleImages + 4);
-        }
-    };
+  const handlePrevImage = () => {
+    setCurrentImageIndex((currentImageIndex - 1 + imageSrcs.length) % imageSrcs.length);
+  };
 
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
+  const handleNextImage = () => {
+    setCurrentImageIndex((currentImageIndex + 1) % imageSrcs.length);
+  };
 
-    return (
-        <div>
-            <Nav/>
-            <div className='main'>
-                {imageUrls.slice(0, visibleImages).map((image, index) => (
-                    <div className='figure fadein' key={index} style={{ animationDelay: `${index * 100}ms` }}>
-                        <div className='figure-image' style={{ backgroundImage: `url(${image.url})` }} />
-                    </div>
-                ))}
-            </div>
+  return (
+    <div className="body">
+      <GalleryContainer handleImageClick={handleImageClick} />
+      {isLightboxOpen && (
+        <div className="lightbox-backdrop" onClick={handleLightboxClose}>
+          <LightboxContainer
+            imageSrcs={imageSrcs}
+            currentImageIndex={currentImageIndex}
+            handlePrevImage={handlePrevImage}
+            handleNextImage={handleNextImage}
+          />
         </div>
-    );
+      )}
+    </div>
+  );
 }
 
+const GalleryContainer = ({ handleImageClick }) => {
+  return (
+    <div className="gallery-container">
+      <Nav />
+      <div className="gallery-header">
+        <h2>Gallery</h2>
+        <p>Here are some of the most memorable moments from QUDM</p>
+      </div>
+      <div className="image-grid">
+        {imageSrcs.map((image, index) => (
+          <div
+            key={index}
+            className="image-wrapper"
+            onClick={() => handleImageClick(index)}
+          >
+            <img
+              src={image.src}
+              alt={`Image ${index}`}
+              style={{
+                width: 'auto',
+                height: '300px',
+                objectFit: 'cover',
+              }}
+            />
+          </div>
+        ))}
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+const LightboxContainer = ({
+  imageSrcs,
+  currentImageIndex,
+  handlePrevImage,
+  handleNextImage,
+  }) => {
+    return (
+      <div className="lightbox-container">
+        <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+          <button className="left-button" onClick={handlePrevImage}>
+            <img src="images/icons/left.png" alt="Previous" />
+          </button>
+          <img
+            src={imageSrcs[currentImageIndex].src}
+            alt="Lightbox"
+            className="lightbox-image"
+          />
+          <button className="right-button" onClick={handleNextImage}>
+            <img src="images/icons/right.png" alt="Next" />
+          </button>
+        </div>
+      </div>
+    );
+};
