@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Nav from "./components/nav/nav.js";
 import Footer from "./components/footer/footer.js";
+import Contact from "./components/contact/contact.js";
 import './home.css';
 
 
@@ -11,34 +12,34 @@ export default function Home() {
 
       <Nav/>
       {/*TITLE SECTION*/}
-      <section class="title">
-        <div class="title-container">
-            <div class="header">Queen's Dance Marathon</div>
-            <div class="subheader">Dancing for Miracles, Moving for a Cause!</div>
+      <section className="title">
+        <div className="title-container">
+            <div className="header">Queen's Dance Marathon</div>
+            <div className="subheader">Dancing for Miracles, Moving for a Cause!</div>
         </div>
       </section>
       {/*END OF TITLE SECTION*/}
 
       {/*EVENT SECTION (blank space placeholder, remove it as needed Thomas)*/}
 
-      <div class="main-frame">
-        <div class="left-grid">
+      <div className="main-frame">
+        <div className="left-grid">
 
-          <div class="left-title">
-            <span class="our-events">OUR EVENTS</span>
+          <div className="left-title">
+            <span className="our-events">OUR EVENTS</span>
           </div>
 
 
-          <div class="our-events-message">
+          <div className="our-events-message">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           </div>
-          <div class="events-button-container">
+          <div className="events-button-container">
             
-            <button class="cssbuttons-io-button">
+            <button className="cssbuttons-io-button">
               Learn More
-              <div class="icon">
+              <div className="icon">
                 <svg
                   height="24"
                   width="24"
@@ -56,18 +57,18 @@ export default function Home() {
           </div>
 
         </div>
-        <div class="right-grid">
-          <div class="right-grid-image">
-            <div class="image-container">
+        <div className="right-grid">
+          <div className="right-grid-image">
+            <div className="image-container">
               <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Blank Image" width={500} height={250} />
             </div>
           </div>
         </div>
-        
-        
       </div>
       {/*END OF EVENT SECTION*/}
-
+      <section>
+        <Contact/>
+      </section>
       {/*ABOUT SECTION*/}
       <section className="about-section">
       <div className="about-container">

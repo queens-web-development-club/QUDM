@@ -2,6 +2,7 @@
 
 .gallery-container {
     height: auto;
+    cursor: pointer; 
 }
   
 .gallery-header {
@@ -51,27 +52,27 @@
     z-index: 9999;
   }
   
-  .lightbox-container {
+.lightbox-container {
     position: relative;
     max-width: 90%;
     max-height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
   
-  .lightbox-content {
+.lightbox-content {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-  }
+}
   
-  .lightbox-image {
+.lightbox-image {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-  }
+}
   
 
 .lightbox-image {
