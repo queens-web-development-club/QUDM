@@ -8,7 +8,7 @@ import './home.css';
 
 export default function Home() {
   return (
-    <div>
+    <div className="grainy">
 
       <Nav/>
       {/*TITLE SECTION*/}
@@ -93,7 +93,10 @@ export default function Home() {
             {/* Add content for the bottom-right section here if needed */}
             {/* Subsection with 5 images... i should probably make these an array at some point */}
             <div className="image-gallery">
+              <div className="image-container">
                 <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Image 1" width={100} height={100} />
+                <div className="image-text">IMG_TEXT_1</div>
+              </div>
                 <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Image 2" width={100} height={100} />
                 <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Image 3" width={100} height={100} />
                 <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Image 4" width={100} height={100} />
