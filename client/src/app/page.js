@@ -7,7 +7,7 @@ import './home.css';
 
 export default function Home() {
   return (
-    <div>
+    <div className="grainy">
 
       <Nav/>
       {/*TITLE SECTION*/}
