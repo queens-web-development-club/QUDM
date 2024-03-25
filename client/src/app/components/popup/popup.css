@@ -1,0 +1,49 @@
+.overlay-image {
+    position: absolute; 
+    top: -20; 
+    left: -5;
+    height: 100px;
+    width: 140px;
+    background-image: url('/images/logo/candle.png'); 
+    background-size: contain; 
+    background-repeat: no-repeat; 
+    background-size: contain;
+    transition: all 0.3s ease;
+}
+
+.popbar {
+    background: #fff;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 15%;
+    height:20%;
+    z-index: 1000; 
+    border-bottom: solid 0.5px;
+    transition: all 0.3s ease; /* Added transition */
+}
+  
+.popbar.collapsed {
+    height: 50px; /* Adjust height as needed */
+    overflow: hidden;
+}
+  
+.popbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    width: 100px; /* Adjust as needed */
+    height: auto;
+}
+  
+.collapse-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
