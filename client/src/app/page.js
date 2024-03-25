@@ -2,6 +2,7 @@ import Image from "next/image";
 import Nav from "./components/nav/nav.js";
 import Footer from "./components/footer/footer.js";
 import Contact from "./components/contact/contact.js";
+import Popup from "./components/popup/popup.js";
 import './home.css';
 
 
@@ -11,6 +12,7 @@ export default function Home() {
     <div className="grainy">
 
       <Nav/>
+      <Popup/>
       {/*TITLE SECTION*/}
       <section className="title">
         <div className="title-container">
