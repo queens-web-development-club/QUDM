@@ -6,30 +6,31 @@ const AuthContext = createContext(null)
 
 export const AuthProvider = ({children}) => {
   const [authData, setAuthData] = useState(() => {
+
+    //If there is a key in the session storage called isLoggedIn and it has the value of true then set isLoggedIn to true, else false.
     const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true"
-    //this code check if the value for "isLoggedIn" === "true"
-    //i have to use quotes around true because sessionStorage only stores strings
+
+    //return an object with the status regarding if the user is logged in or not. (variable called isAuthenticated)
     return {
-      email: null,
-      password: null,
       isAuthenticated: isLoggedIn
     }
   });
+  //Note: removed email and password from object. it was redundant
     
-
-
-  const login = (email, password) => {
-    setAuthData({email, password, isAuthenticated: true})
+  //Login function that sets the value of this object as well as included isLoggedIn in the session storage
+  const login = () => {
+    setAuthData({isAuthenticated: true})
     sessionStorage.setItem("isLoggedIn", "true")
-    //when the login function is used creates an item in the local storage
     //that looks like this "isLoggedIn": "true"
   }
 
+  //Logout function that sets the value of everything in the object to null or false and then removed the item from the session storage.
   const logout = () => {
     setAuthData({email: null, password: null, isAuthenticated: false})
     sessionStorage.removeItem("isLoggedIn")
   }
 
+  //Allows for the functions authData, login, and logout to be used in contents wrapped in the AuthProvider (see layout.js)
   return(
     <AuthContext.Provider value = {{authData, login, logout}}>
       {children}
@@ -37,6 +38,7 @@ export const AuthProvider = ({children}) => {
   )
 }
 
+//When this function is called, it allows you to use the other functions defined in the context
 export const useAuth = () => {
   return useContext(AuthContext)
 }

@@ -3,9 +3,16 @@
 // pages/login.js
 import { useState } from 'react';
 import { useAuth } from '../auth/authContext';
+
+//next redirect library
+import { useRouter } from 'next/navigation'
+
 import "./login.css";
 
 const Login = () => {
+
+  const router = useRouter()
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -13,15 +20,20 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    console.log(password)
 
     try {
-      const response = await fetch('http://localhost:3002/api/users/post', {
+      //Make post request to endpoint with the email and password passed as json in the body
+      const response = await fetch('http://localhost:3002/api/login/post', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
+      //If email and password match, login user and redirect to /admin, otherwise send an alert
       if (response.status === 200) {
-        auth.login(email, password, true);
+        console.log("status: 200")
+        auth.login(true);
+        router.push('/admin')
       } else {
         alert('Improper Email or Password');
       }
