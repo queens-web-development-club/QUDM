@@ -7,28 +7,25 @@ import './home.css';
 
 
 
+
+
 export default function Home() {
+  
   return (
     <div className="grainy">
 
       <Nav/>
+      
       <Popup/>
-      {/*TITLE SECTION*/}
-      <section className="title">
-        <div className="title-container">
-            <div className="header">Queen's Dance Marathon</div>
-            <div className="subheader">Dancing for Miracles, Moving for a Cause!</div>
-        </div>
-      </section>
-      {/*END OF TITLE SECTION*/}
+      
 
       {/*EVENT SECTION (blank space placeholder, remove it as needed Thomas)*/}
 
       <div className="main-frame">
         <div className="left-grid">
 
-          <div className="left-title">
-            <span className="our-events">OUR EVENTS</span>
+          <div class="left-title">
+            <span class="our-events">Dancing for Miracles, Moving for a Cause!</span>
           </div>
 
 

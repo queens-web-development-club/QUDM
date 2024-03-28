@@ -6,6 +6,8 @@
     padding-bottom: 100px;
 }
 
+
+
 .about-container {
     max-width: 1600px;
     max-height: 500px;
@@ -127,6 +129,7 @@
     display: grid;
     height: 600px;
     margin-bottom: 60px;
+    margin-top: 100px;
 }
 
 .left-grid {
@@ -145,13 +148,15 @@
 }
 
 .our-events {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: bold;
     color: white;
     padding-left: 100px;
     padding-right: 100px;
     border-radius: 20px;
+    margin-top: 30px;
     font-family: Arial, Helvetica, sans-serif;
+    border: solid;
 }
 
 .our-events-message {
@@ -167,7 +172,6 @@
 .right-grid {
     background-color: #1e2e3a;
     grid-column-start: 2;
-    border-top-right-radius: 200px;
 }
 
 
@@ -202,6 +206,7 @@
     height: 2.8em;
     padding-right: 3.3em;
     cursor: pointer;
+    width: 200px;
   }
   
   .cssbuttons-io-button .icon {

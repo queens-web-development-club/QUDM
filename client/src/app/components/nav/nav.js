@@ -14,7 +14,9 @@ const Navbar = () => {
               {/* <div className = 'overlay-image'/> This is the glowy logo */} 
               </a>
             </div>
-    
+
+            <h1><span class="highlight-container"><span class="highlight">Queen's Dance Marathon</span></span></h1>
+
             <div className="main-menu">
               <ul>
                 <li>
