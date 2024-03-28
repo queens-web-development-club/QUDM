@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
+
 import './contact.css';
 
 const Contact = () => {
@@ -14,24 +15,42 @@ const Contact = () => {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateEmail(email)) {
       setEmailError('Please enter a valid email address');
     } else {
+        //Put data into json object
+        const formData = {
+            name: name,
+            email: email,
+            message: message
+        };
 
-    //add logic here later to send an email
+        console.log(formData)
 
-
-      console.log('Name:', name);
-      console.log('Email:', email);
-      console.log('Message:', message);
-
-
-      setEmailError('');
-      setName('');
-      setEmail('');
-      setMessage('');
+        //send data to endpoint as json
+        await fetch('http://localhost:3002/api/contact/get', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
+          .then(response => {
+            if (response.ok) {
+              console.log('Form data sent successfully');
+              setEmailError('');
+              setName('');
+              setEmail('');
+              setMessage('');
+            } else {
+              throw new Error('Failed to send form data');
+            }
+          })
+          .catch(error => {
+            console.error('Error sending form data:', error);
+          });
     }
   };
 

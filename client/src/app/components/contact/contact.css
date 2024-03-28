@@ -20,10 +20,8 @@
 }
 
 img {
-    width: 10vh; 
-    height: 10vh;
     object-fit: contain;
-  }
+}
   
 .form-box {
     background-color: white;
