@@ -66,6 +66,11 @@ export default function Home() {
       </div>
       {/*END OF EVENT SECTION*/}
       <section>
+        <div class="circles-main">
+          
+        </div>
+      </section>
+      <section>
         <Contact/>
       </section>
       {/*ABOUT SECTION*/}
