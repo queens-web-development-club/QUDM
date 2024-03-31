@@ -1,5 +1,79 @@
 .circles-main {
-    height: 400px;
+    height: 800px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: space-evenly; /* Spread items evenly */
+    height: 100%; /* Adjusted height */
+    margin-top: 150px;
+    position: relative; /* Make the container position relative */
+    z-index: 1; /* Set a higher z-index to place it on top */
+}
+
+.icon-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 450px; /* Match the width of your icons for alignment */
+    margin: 0 20px; /* Add some horizontal spacing */
+}
+
+.icon-text strong {
+    font-family: sans-serif;
+    font-size: 24px;
+    color: #253746; /* Adjust the color to fit your design */
+    margin-bottom: 10px;
+}
+
+.icon-text p {
+    font-family: sans-serif;
+    font-size: 20px;
+    color: #253746; /* Adjust the color to fit your design */
+    padding: 0 10px; /* Add some padding for text not to touch the edges */
+}
+
+.icon-container img {
+    width: 200px; /* Adjusted width */
+    height: 200px; /* Adjusted height */
+}
+
+.wave {
+    display: block;
+    position: relative;
+    height: 40px;
+    width: 100%;
+    background: #253746;
+    transform: scale(1, 1);
+}
+
+.wave:before {
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: 100%;
+    width: 100%;
+    height: 300px;
+    background-color: white;
+    right: -25%;
+    top: 20px
+}
+
+.wave:after {
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: 100%;
+    width: 100%;
+    height: 300px;
+    background-color: #253746;
+    left: -25%;
+    top: -240px;
+    clip-path: ellipse(100% 15% at -15% 100%);
 }
 
 .about-section {
@@ -140,9 +214,7 @@
     grid-column-start: 1;
     
     background-color: #253746;
-    opacity: 1;
-    background-image: radial-gradient(#0b1b57 1.55px, #253746 1.55px);
-    background-size: 31px 31px;
+    
 }
 
 .left-title {
@@ -174,8 +246,10 @@
 
 
 .right-grid {
-    background-color: #1e2e3a;
     grid-column-start: 2;
+
+    background-color: #253746;
+    
 }
 
 
@@ -247,8 +321,9 @@
   }
   
 
-  
+  /* 
   .grainy {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAElBMVEUAAAD8/vz08vT09vT8+vzs7uxH16TeAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAuFJREFUOI0Vk+3NLiEIRG1B8ClAYAsQ2AIEt4D9ePtv5Xp/mZgYJ2fOFJKEfInkVWY2aglmQFkimRTV7MblYyVqD7HXyhKsSuPX12MeDhRHLtGvRG+P+B/S0Vu4OswR9tmvwNPyhdCDbVayJGads/WiUWcjCvCnruTBNHS9gmX2VzVbk7ZvB1gb1hkWFGl+A/n+/FowcO34U/XvKqZ/fHY+6vgRfU92XrOBUbGeeDfQmjWjdrK+frc6FdGReQhfSF5JvR29O2QrfNw1huTwlgsyXLo0u+5So82sgv7tsFZR2nxB6lXiquHrfD8nfYZ9SeT0LiuvSoVrxGY16pCNRZKqvwWsn5OHypPBELzohMCaRaa0ceTHYqe7X/gfJEEtKFbJpWoNqO+aS1cuTykGPpK5Ga48m6L3NefTr013KqYBQu929iP1oQ/7UwSR+i3zqruUmT84qmhzLpxyj7pr9kg7LKvqaXxZmdpn+6o8sHqSqojy02gU3U8q9PnpidiaLks0mbMYz+q2uVXsoBQ8bfURULYxRgZVYCHMv9F4OA7qxT2NPPpvGQ/sTDH2yznKh7E2AcErfcNsaIoN1izzbJiaY63x4QjUFdBSvDCvugPpu5xDny0jzEeuUQbcP1aGT9V90uixngTRLYNEIIZ6yOF1H8tm7rj2JxiefsVy53zGVy3ag5uuPsdufYOzYxLRxngKe7nhx3VAq54pmz/DK9/Q3aDam2Yt3hNXB4HuU87jKNd/CKZn77Qdn5QkXPfqSkhk7hGOXXB+7v09KbBbqdvxGqa0AqfK/atIrL2WXdAgXAJ43Wtwe/aIoacXezeGPMlhDOHDbSfHnaXsL2QzbT82GRwZuezdwcoWzx5pnOnGMUdHuiY7lhdyWzWiHnucLZQxYStMJbtcydHaQ6vtMbe0AcDbxG+QG14AL94xry4297xpy9Cpf1OoxZ740gHDfrK+gtsy0xabwJmfgtCeii79B6aj0SJeLbd7AAAAAElFTkSuQmCC);
   }
+  */
   

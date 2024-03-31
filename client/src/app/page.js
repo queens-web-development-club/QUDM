@@ -65,9 +65,30 @@ export default function Home() {
         </div>
       </div>
       {/*END OF EVENT SECTION*/}
-      <section>
-        <div class="circles-main">
-          
+      <section className="circles-main">
+        <div className="wave"></div>
+        <div className="icon-container">
+            <div className="icon-text-container">
+                <img src="images/icons/hospital.png" alt="Hospital Logo"/>
+                <div className="icon-text">
+                    <strong>Supporting the local children’s hospital</strong>
+                    <p>100% of the funds raised by QUDM is directly donated to our university's local children’s hospital, CHEO in Ottawa.</p>
+                </div>
+            </div>
+            <div className="icon-text-container">
+                <img src="images/icons/star.png" alt="Star Logo"/>
+                <div className="icon-text">
+                    <strong>Advancing care for sick children</strong>
+                    <p>Your donations fund critical treatments and healthcare services for children, bringing them a brighter future.</p>
+                </div>
+            </div>
+            <div className="icon-text-container">
+                <img src="images/icons/tie.png" alt="Tie Logo"/>
+                <div className="icon-text">
+                    <strong>Helping students gain leadership and non-profit business experience</strong>
+                    <p>The students who organize our dance marathon and fundraise for our club spend a year gaining valuable skills for their future.</p>
+                </div>
+            </div>
         </div>
       </section>
       <section>
