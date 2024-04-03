@@ -1,23 +1,22 @@
 .main {
-    display: flex;
-    flex-direction: row;
-    background-color: #FFCB05; 
-    width: 100%;
-    height: 80vh;
-    align-items: center;
-    justify-content: space-evenly;
-  }
-  
-  
-  
-.info {
-    margin-right: -30vh;
-    display: flex;
-    flex-direction: column;
-    height: 80%;
-    justify-content: center;
-    text-align: center; 
+  display: flex;
+  flex-direction: column; /* Update to column layout */
+  background-color: #ffffff; 
+  width: 100%;
+  min-height: 40vh; /* Change height to min-height for better responsiveness */
+  align-items: center;
 }
+
+.info {
+  margin-bottom: 20px; /* Adjust spacing */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center; 
+}
+
+
+
 
 img {
     object-fit: contain;
@@ -25,49 +24,42 @@ img {
   
 .form-box {
     background-color: white;
-    height: 80%;
-    width: 30%;
+    width: 80%; /* Update width for better responsiveness */
+    max-width: 600px; /* Limit maximum width */
     padding: 20px; 
     border: 2px solid black; 
-}
+    border-radius: 10px; /* Add border radius */
+    margin-top: 20px; /* Adjust spacing */
+  }
   
-.form-box h2 {
+  .form-box h2 {
     display: flex;
     justify-content: center;
-    margin-top: 0; 
+    margin: 0; /* Remove margin */
     padding: 1rem;
-}
+  }
   
-form {
+  form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-}
+  }
   
-input{
-    width: 90%;
-    margin: 1vh;
-    padding: 1vh;
+  input, textarea {
+    width: 100%; /* Adjust width */
+    margin: 10px 0; /* Adjust margin */
+    padding: 10px;
     border: 1px solid #ccc; 
     border-radius: 4px; 
-    min-height: 5vh;
-}
-
-textarea{
-    width: 90%;
-    margin: 1vh;
-    padding: 1vh;
-    border: 1px solid #ccc; 
-    border-radius: 4px; 
-    min-height: 25vh;
-}
+    min-height: 50px; /* Adjust height */
+  }
   
-button {
-    display: block;
-    height: 5vh;
-    width: 50%;
+  button {
+    width: 50%; /* Adjust width */
+    max-width: 200px; /* Limit maximum width */
+    margin-top: 10px; /* Adjust margin */
+    padding: 10px;
     border: 1px solid #ccc; 
-    border-radius: 4px; 
-    
-}
+    border-radius: 4px;
+    cursor: pointer; /* Add cursor pointer */
+  }

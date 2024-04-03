@@ -1,22 +1,33 @@
+"use client"
+
 import Image from "next/image";
 import Nav from "./components/nav/nav.js";
 import Footer from "./components/footer/footer.js";
 import Contact from "./components/contact/contact.js";
 import Popup from "./components/popup/popup.js";
 import './home.css';
+import React, { useRef } from 'react';
 
 
 
 
 
 export default function Home() {
+
+  const nextSectionRef = useRef(null);
+
+  const scrollToNextSection = () => {
+    nextSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
   
   return (
     <div className="grainy">
 
       <Nav/>
       
+      {/* 
       <Popup/>
+      */}
       
 
       {/*EVENT SECTION (blank space placeholder, remove it as needed Thomas)*/}
@@ -30,13 +41,24 @@ export default function Home() {
 
 
           <div className="our-events-message">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <div className="block-1">
+              <div className="bubble-text-1">$27,169</div>
+              <div>raised in total</div>
+            </div>
+            <div className="block-2">
+              <div className="bubble-text-2">2019</div>
+              <div>club launched in</div>
+            </div>
+            <div className="block-3">
+              <div className="bubble-text-3">6</div>
+              <div>active programs across Canada</div>
+            </div>
+            
+            
           </div>
           <div className="events-button-container">
             
-            <button className="cssbuttons-io-button">
+            <button onClick={scrollToNextSection} className="cssbuttons-io-button">
               Learn More
               <div className="icon">
                 <svg
@@ -59,13 +81,13 @@ export default function Home() {
         <div className="right-grid">
           <div className="right-grid-image">
             <div className="image-container">
-              <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Blank Image" width={500} height={250} />
+              <img src="images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG" alt="Blank Image" width={0} height={500} />
             </div>
           </div>
         </div>
       </div>
       {/*END OF EVENT SECTION*/}
-      <section className="circles-main">
+      <section ref={nextSectionRef} className="circles-main">
         <div className="wave"></div>
         <div className="icon-container">
             <div className="icon-text-container">
@@ -91,17 +113,11 @@ export default function Home() {
             </div>
         </div>
       </section>
-      <section>
-        <Contact/>
-      </section>
+      
       {/*ABOUT SECTION*/}
       <section className="about-section">
       <div className="about-container">
         <div className="left">
-          <div className="image-container">
-            {/* Using online sample for now. can use local files as well */}
-            <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Blank Image" width={500} height={250} />
-          </div>
         </div>
         <div className="right">
           <div className="top-right">
@@ -114,24 +130,15 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="bottom-right">
-            {/* Add content for the bottom-right section here if needed */}
-            {/* Subsection with 5 images... i should probably make these an array at some point */}
-            <div className="image-gallery">
-              <div className="image-container">
-                <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Image 1" width={100} height={100} />
-                <div className="image-text">IMG_TEXT_1</div>
-              </div>
-                <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Image 2" width={100} height={100} />
-                <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Image 3" width={100} height={100} />
-                <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Image 4" width={100} height={100} />
-                <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Image 5" width={100} height={100} />
-            </div>
-          </div>
         </div>
       </div>
+    
     </section>
+    
     {/*END OF ABOUT SECTION*/}
+    <section>
+        <Contact/>
+    </section>
 
     {/*FOOTER SECTION*/}
     <Footer/>
