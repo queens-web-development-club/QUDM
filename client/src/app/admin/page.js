@@ -12,7 +12,6 @@ import "./admin.css"
 const Admin = () => {
   const router = useRouter();
   const { authData } = useAuth();
-  const [load, setLoad] = useState(false);
 
   const [isUsers, setIsUsers] = useState(false);
   const [isGallery, setIsGallery] = useState(false);
@@ -28,7 +27,6 @@ const Admin = () => {
       router.push('/login')
     } else {
       console.log("LOGGED IN")
-      setLoad(true)
     }
   }, [authData.isAuthenticated, router]);
 
@@ -36,12 +34,14 @@ const Admin = () => {
     setIsUsers(true);
     setIsGallery(false);
     setIsStats(false);
+    setIsBlog(false);
   };
 
   const handleGalleryClick = () => {
     setIsUsers(false);
     setIsGallery(true);
     setIsStats(false);
+    setIsBlog(false);
   };
 
   const handleBlogClick = () => {
