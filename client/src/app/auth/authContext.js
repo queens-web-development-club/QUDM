@@ -8,7 +8,8 @@ export const AuthProvider = ({children}) => {
   const [authData, setAuthData] = useState(() => {
 
     //If there is a key in the session storage called isLoggedIn and it has the value of true then set isLoggedIn to true, else false.
-    const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true"
+    const isLoggedIn = typeof sessionStorage !== 'undefined' && sessionStorage.getItem("isLoggedIn") === "true";
+
 
     //return an object with the status regarding if the user is logged in or not. (variable called isAuthenticated)
     return {

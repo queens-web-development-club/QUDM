@@ -29,7 +29,7 @@ app.post('/api/login/post', (req, res) => {
     console.log("recieved")
     const { email, password } = req.body;
 
-    fs.readFile('data.json', (err, data) => {
+    fs.readFile('./database/data.json', (err, data) => {
         if (err) {
           console.error('Error reading file:', err);
           return res.status(500).json({ error: 'Internal Server Error' });
@@ -43,6 +43,60 @@ app.post('/api/login/post', (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
     })
+});
+
+//Endpoint to get stat data
+app.get('/api/stats/get', (req, res) => {
+
+    fs.readFile('./database/data.json', (err, data) => {
+        if (err) {
+          console.error('Error reading file:', err);
+          return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        const jsonData = JSON.parse(data);
+        const statistics = jsonData.statistics;
+        res.status(200).json(statistics);
+    })
+});
+
+//Endpoint to update stat data
+app.put('/api/stats/put/:id', async (req, res) => {
+    const { id } = req.params;
+    const { data } = req.body;
+
+    // Read the data from the JSON file
+    fs.readFile('./database/data.json', 'utf8', (err, jsonData) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        try {
+            const parsedData = JSON.parse(jsonData);
+
+            // Check if the statistic exists
+            if (parsedData.statistics && parsedData.statistics[id] !== undefined) {
+                // Update the statistic with the new value
+                parsedData.statistics[id] = data;
+
+                // Write the updated data back to the file
+                fs.writeFile('./database/data.json', JSON.stringify(parsedData, null, 2), 'utf8', (err) => {
+                    if (err) {
+                        console.error('Error writing file:', err);
+                        return res.status(500).json({ error: 'Internal Server Error' });
+                    }
+                    
+                    res.status(200).send('Statistic updated successfully');
+                });
+            } else {
+                res.status(404).send('Statistic not found');
+            }
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
 });
 
 // RUN server on port (put at end)
