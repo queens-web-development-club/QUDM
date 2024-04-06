@@ -2,13 +2,16 @@ import PostCard from "../components/PostCard"
 import getPostMetadata from "../utils/getPostMetadata"
 import Nav from "../components/nav/nav.js"; 
 import Footer from "../components/footer/footer.js";
+import './blog.css';
 
 
-export default function mdblog(){
+export default function blog(){
     const postMetadata = getPostMetadata('posts')
     return(
         <main>
-            <Nav/>
+            <div className="nav">
+                <Nav/>
+            </div>
             <div className="postContainer">
                 {postMetadata.map((post, postIndex) => {
                     return(

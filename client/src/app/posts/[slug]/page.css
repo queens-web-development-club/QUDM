@@ -1,16 +1,30 @@
-:root{
-    --nav-height: 110px; 
+.flex-container{
+    display: flex;
+    flex-direction: row-reverse;
 }
 
-.nav{
-    padding-bottom: var(--nav-height);
+.postInfo{
+    margin-left: 110px;
+    margin-right: 175px;
+    margin-top: 115px;
 }
 
-.postsContainer {
+.postContent{
+    margin-top: 25px;
+    margin-left: 110px;
+    margin-right: 175px;
+    line-height: 2.5;
+}
+
+.morePosts{
+    margin-top: 115px;  
+    margin-left: 50px;
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 14px;
+      
 }
+
   
 .postCard {
     padding: 50px;
