@@ -6,7 +6,7 @@ import Footer from "./components/footer/footer.js";
 import Contact from "./components/contact/contact.js";
 import Popup from "./components/popup/popup.js";
 import './home.css';
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 
 
@@ -15,10 +15,29 @@ import React, { useRef } from 'react';
 export default function Home() {
 
   const nextSectionRef = useRef(null);
+  const [stats, setStats] = useState([]);
 
   const scrollToNextSection = () => {
     nextSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+          const response = await fetch('http://localhost:3002/api/stats/get');
+          const statsData = await response.json();
+          console.log(statsData);
+  
+          const statsArray = Object.entries(statsData).map(([key, value]) => ({ id: key, data: value }));
+  
+          setStats(statsArray); // Set the state to the array
+      } catch (error) {
+          console.error('Error fetching statistics:', error);
+      }
+  };
+
+    fetchStats();
+}, []);
   
   return (
     <div className="grainy">
@@ -41,21 +60,18 @@ export default function Home() {
 
 
           <div className="our-events-message">
-            <div className="block-1">
-              <div className="bubble-text-1">$27,169</div>
-              <div>raised in total</div>
-            </div>
-            <div className="block-2">
-              <div className="bubble-text-2">2019</div>
-              <div>club launched in</div>
-            </div>
-            <div className="block-3">
-              <div className="bubble-text-3">6</div>
-              <div>active programs across Canada</div>
-            </div>
-            
-            
+            {stats.map((stat, index) => (
+              <div className={`block-${index + 1}`} key={index}>
+                <div className={`bubble-text-${index + 1}`}>{stat.data}</div>
+                <div>
+                  {stat.id === 'stat1' && "raised in total"}
+                  {stat.id === 'stat2' && "club launched in"}
+                  {stat.id === 'stat3' && "active programs across Canada"}
+                </div>
+              </div>
+            ))}
           </div>
+
           <div className="events-button-container">
             
             <button onClick={scrollToNextSection} className="cssbuttons-io-button">
