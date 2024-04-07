@@ -192,6 +192,29 @@ app.delete('/api/images/:filename', (req, res) => {
     });
 });
 
+// Get users
+app.get('/api/users/get', (req, res) => {
+
+    fs.readFile('./database/data.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        try {
+            const jsonData = JSON.parse(data);
+            console.log(jsonData)
+            const authData = {
+                email: jsonData.auth.email,
+                password: jsonData.auth.password
+            };
+            res.json(authData);
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    })
+  });
+
 // RUN server on port (put at end)
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);

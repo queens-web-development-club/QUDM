@@ -14,12 +14,17 @@ const Admin = () => {
   const { authData } = useAuth();
 
   const [isUsers, setIsUsers] = useState(false);
+  const [users, setUsers] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+
   const [isGallery, setIsGallery] = useState(false);
   const [isBlog, setIsBlog] = useState(false);
+
   const [isStats, setIsStats] = useState(false);
   const [stats, setStats] = useState([]);
   const [selectedStatId, setSelectedStatId] = useState(null);
   const [editedStat, setEditedStat] = useState('');
+
   const [images, setImages] = useState([]);
   const [deleteMessages, setDeleteMessages] = useState([]);
   useEffect(() => {
@@ -64,7 +69,7 @@ const Admin = () => {
       try {
         const response = await fetch('api/stats/get');
         const statsData = await response.json();
-        console.log(statsData);
+        // console.log(statsData);
   
         const statsArray = Object.entries(statsData).map(([key, value]) => ({ id: key, data: value }));
   
@@ -91,9 +96,26 @@ const Admin = () => {
         setImages([]); // Set images to an empty array or handle the error in another way
       }
     };
+
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('api/users/get');
+        if (!response.ok) {
+          throw new Error('Failed to fetch users');
+        }
+        const userData = await response.json();
+        console.log(userData)
+        setUsers(userData);
+        console.log(users)
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        setUsers({}); 
+      }
+    };
   
     fetchImages();
     fetchStats();
+    fetchUsers();
   }, []);
 
 
@@ -149,6 +171,10 @@ const handleDeleteImage = async (filename) => {
   }
 };
 
+const handleShowPassword = () => {
+  setShowPassword(prevState => !prevState) 
+};
+
   return (
     <>
       <Nav/>
@@ -160,9 +186,43 @@ const handleDeleteImage = async (filename) => {
             <button onClick={handleStatsClick} disabled={isStats}>Stats</button>
           </div>
 
-          {isUsers && <div>
-            <p>Users Content</p>
-          </div>}
+          {isUsers && (
+            <div>
+              <h1>Users</h1>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{users.email}</td>
+                    <td>{showPassword ? users.password : '********'}</td>
+                    <td>
+                      <button onClick={handleShowPassword}>{showPassword ? 'Hide' : 'Show'}</button>
+                      <button onClick={() => handleEditUser(users.email)}>Edit</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              {/* {selectedUserEmail && (
+                <div className="edit-form">
+                  <h2>Edit User {selectedUserEmail}</h2>
+                  <input 
+                    type="text" 
+                    value={editedUser.password} 
+                    onChange={(e) => setEditedUser({...editedUser, password: e.target.value})} 
+                    placeholder="Enter new password" 
+                  />
+                  <button onClick={handleSaveUser}>Save</button>
+                  <button onClick={handleCloseUserForm}>Close</button>
+                </div>
+              )} */}
+            </div>
+          )}
 
           {isGallery && <div>
             <h1>Gallery Settings</h1>
