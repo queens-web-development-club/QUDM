@@ -11,7 +11,7 @@ export default {
         return [
             {
                 source: '/api/:path*',
-                destination: 'http://localhost:3002/api/:path*', // Change this URL to match your backend server URL
+                destination: 'http://localhost:3002/api/:path*', //this makes it so any api calls are referred to localhost:3002 + whatever path u set lol
             },
         ];
     },

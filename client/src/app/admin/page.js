@@ -62,7 +62,7 @@ const Admin = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('http://localhost:3002/api/stats/get');
+        const response = await fetch('api/stats/get');
         const statsData = await response.json();
         console.log(statsData);
   
@@ -76,7 +76,7 @@ const Admin = () => {
   
     const fetchImages = async () => {
       try {
-        const response = await fetch('http://localhost:3002/api/images/get');
+        const response = await fetch('api/images/get');
         if (!response.ok) {
           throw new Error('Failed to fetch images');
         }
@@ -101,7 +101,7 @@ const Admin = () => {
     if (!selectedStatId || !editedStat) return;
     
     try {
-        const response = await fetch(`http://localhost:3002/api/stats/put/${selectedStatId}`, {
+        const response = await fetch(`api/stats/put/${selectedStatId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ data: editedStat })
@@ -132,7 +132,7 @@ const handleCloseForm = () => {
 
 const handleDeleteImage = async (filename) => {
   try {
-    const response = await fetch(`http://localhost:3002/api/images/${encodeURIComponent(filename)}`, {
+    const response = await fetch(`api/images/${encodeURIComponent(filename)}`, {
       method: 'DELETE'
     });
     if (response.status === 200) {
@@ -183,7 +183,7 @@ const handleDeleteImage = async (filename) => {
                             <td>{image.filename}</td>
                             <td>
                                 <img 
-                                    src={`http://localhost:3002/api/images/${encodeURIComponent(image.filename)}`} 
+                                    src={`api/images/${encodeURIComponent(image.filename)}`} 
                                     alt={image.filename} 
                                     style={{ width: '200px', height: 'auto' }} 
                                     onLoad={() => console.log('Image loaded:', image.path)}

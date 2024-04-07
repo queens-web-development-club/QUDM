@@ -6,10 +6,6 @@ import Image from "next/image";
 import Footer from "../components/footer/footer.js";
 import React, { useState, useEffect } from 'react';
 
-
-
-
-
 export default function Gallery() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
