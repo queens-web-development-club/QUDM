@@ -1,5 +1,5 @@
 ---
-title: 'This Blog Title Is Extremely Long And Basically You Are Extremely Stupid'
+title: 'Test Blog Post 1'
 author: 'Xavier A.'
 date: '2024-03-28'
 ---

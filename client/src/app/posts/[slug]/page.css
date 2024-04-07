@@ -4,14 +4,14 @@
 }
 
 .postInfo{
-    margin-left: 110px;
+    margin-left: 330px;
     margin-right: 175px;
     margin-top: 115px;
 }
 
 .postContent{
     margin-top: 25px;
-    margin-left: 110px;
+    margin-left: 330px;
     margin-right: 175px;
     line-height: 2.5;
 }
@@ -22,12 +22,12 @@
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 14px;
-      
 }
 
   
 .postCard {
     padding: 50px;
+    width: 300px;
     background: white;
     display: flex;
     flex-direction: column;
