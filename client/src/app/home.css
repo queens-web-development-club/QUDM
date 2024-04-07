@@ -5,6 +5,16 @@
     padding: 0;
 }
 
+@media screen and (max-width: 1920px) and (max-height: 1080px) {
+    .circles-main {
+        margin-top: -60px;
+    }
+    .icon-container img {
+        min-height: 220px;
+    }
+
+}
+
 .icon-container {
     display: flex;
     justify-content: space-evenly; /* Spread items evenly */
@@ -41,6 +51,7 @@
     width: 200px; /* Adjusted width */
     height: 200px; /* Adjusted height */
 }
+
 
 .wave {
     display: block;
