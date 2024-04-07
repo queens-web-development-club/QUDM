@@ -31,7 +31,7 @@ const Contact = () => {
 
   // Dynamic styles for smooth height transition
   const formStyle = {
-    height: isExpanded ? '600px' : '100px', // Adjust these values as needed
+    height: isExpanded ? '400px' : '120px', // Adjust these values as needed
     overflow: 'hidden',
     transition: 'height 0.5s ease', // Smooth transition for height change
   };
@@ -42,9 +42,12 @@ const Contact = () => {
         {/* Your info sections here */}
       </div>
       <div className="form-box" style={formStyle}>
-        <button onClick={toggleForm} style={{ margin: '20px' }}>
-          {isExpanded ? 'Close' : 'Leave a Message'}
-        </button>
+        <div className="button-container">
+          <button onClick={toggleForm} style={{ margin: '20px' }}>
+            {isExpanded ? 'Close' : 'Leave a Message'}
+          </button>
+        </div>
+        
         {isExpanded && (
           <form onSubmit={handleSubmit}>
             <input type="text" placeholder="Enter your Name" value={name} onChange={(e) => setName(e.target.value)} />

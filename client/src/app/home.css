@@ -80,7 +80,6 @@
     display: flex;
     justify-content: center;
     background-color: #ffffff;
-    padding-bottom: 100px;
     
 }
 
@@ -233,7 +232,7 @@
     padding-left: 100px;
     padding-right: 100px;
     margin-top: 30px;
-    font-family: 'Comic Sans MS', Helvetica, sans-serif;
+    font-family: Helvetica, sans-serif;
     
 }
 

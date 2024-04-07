@@ -3,7 +3,7 @@
   flex-direction: column; /* Update to column layout */
   background-color: #ffffff; 
   width: 100%;
-  min-height: 40vh; /* Change height to min-height for better responsiveness */
+  min-height: 50vh; /* Change height to min-height for better responsiveness */
   align-items: center;
 }
 
@@ -14,6 +14,14 @@
   justify-content: center;
   text-align: center; 
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+
 
 
 
@@ -27,7 +35,7 @@ img {
     width: 80%; /* Update width for better responsiveness */
     max-width: 600px; /* Limit maximum width */
     padding: 20px; 
-    border: 2px solid black; 
+    border: 1px solid black; 
     border-radius: 10px; /* Add border radius */
     margin-top: 20px; /* Adjust spacing */
   }
@@ -49,9 +57,10 @@ img {
     width: 100%; /* Adjust width */
     margin: 10px 0; /* Adjust margin */
     padding: 10px;
-    border: 1px solid #ccc; 
+    border: 1px solid #000000; 
     border-radius: 4px; 
     min-height: 50px; /* Adjust height */
+    resize: none;
   }
   
   button {
@@ -59,7 +68,8 @@ img {
     max-width: 200px; /* Limit maximum width */
     margin-top: 10px; /* Adjust margin */
     padding: 10px;
-    border: 1px solid #ccc; 
+    border: 1px solid #000000; 
     border-radius: 4px;
     cursor: pointer; /* Add cursor pointer */
+    background-color: #ffd500;
   }
