@@ -143,7 +143,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    max-height: 600px;
     position:relative;
 }
 
@@ -152,7 +151,7 @@
 .image-container img {
     width: 100%;
     height: auto;
-    max-height: 100%;
+    border-radius: 10px;
 }
 
 .text-container {
@@ -326,7 +325,7 @@
 
 
 .right-grid-image {
-    padding: 150px;
+    padding: 100px;
 }
 
 .events-button-container {

@@ -43,7 +43,7 @@ const Contact = () => {
       </div>
       <div className="form-box" style={formStyle}>
         <div className="button-container">
-          <button onClick={toggleForm} style={{ margin: '20px' }}>
+          <button onClick={toggleForm} style={{ margin: '20px', fontSize: "15px", fontFamily: "inherit", fontWeight: "bold" }}>
             {isExpanded ? 'Close' : 'Leave a Message'}
           </button>
         </div>
@@ -54,7 +54,7 @@ const Contact = () => {
             <input type="email" placeholder="Enter a valid email address" value={email} onChange={(e) => setEmail(e.target.value)} />
             {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
             <textarea placeholder="Enter your message" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
-            <button type="submit">Submit</button>
+            <button style={{ fontSize: "15px", fontFamily: "inherit", fontWeight: "bold"}} type="submit">Submit</button>
           </form>
         )}
       </div>
