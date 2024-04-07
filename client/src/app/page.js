@@ -97,7 +97,9 @@ export default function Home() {
         <div className="right-grid">
           <div className="right-grid-image">
             <div className="image-container">
-              <img src="images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG" alt="Blank Image" width={0} height={500} />
+              <div className="home-picture">
+                <img src="images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG" alt="Blank Image" />
+              </div>
             </div>
           </div>
         </div>
