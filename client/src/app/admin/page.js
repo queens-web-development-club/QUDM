@@ -21,7 +21,7 @@ const Admin = () => {
   const [selectedStatId, setSelectedStatId] = useState(null);
   const [editedStat, setEditedStat] = useState('');
   const [images, setImages] = useState([]);
-  const [deleteMessage, setDeleteMessage] = useState('');
+  const [deleteMessages, setDeleteMessages] = useState([]);
   useEffect(() => {
     if (!authData.isAuthenticated) {
       alert("NOT LOGGED IN");
@@ -137,9 +137,10 @@ const handleDeleteImage = async (filename) => {
     });
     if (response.status === 200) {
       console.log('Image deleted successfully');
-      setDeleteMessage(`Deleted ${filename} image successfully`);
-      setTimeout(() => setDeleteMessage(''), 4500);
-      fetchImages();
+      const newDeleteMessage =`Deleted ${filename} image successfully`;
+      //setTimeout(() => setDeleteMessage(''), 4500); timeout to make messages disappear
+      setDeleteMessages(prevMessages => [...prevMessages, newDeleteMessage]);
+      setImages(prevImages => prevImages.filter(image => image.filename !== filename));//refresh the list of imgs
     } else {
       console.error('Failed to delete image');
     }
@@ -165,7 +166,8 @@ const handleDeleteImage = async (filename) => {
 
           {isGallery && <div>
             <h1>Gallery Settings</h1>
-            {deleteMessage && <p style={{ color: 'red', fontSize: '24px', fontWeight: 'bold' }}>{deleteMessage}</p>}
+            {deleteMessages.map((message, index) => (
+              <p key={index} style={{ color: 'red', fontSize: '24px', fontWeight: 'bold' }}>{message}</p>))}
                   <table>
                       <thead>
                           <tr>
@@ -191,12 +193,12 @@ const handleDeleteImage = async (filename) => {
                             <td>{new Date(image.dateOfCreation).toLocaleString()}</td>
                             <td>
                               <button onClick={() => handleDeleteImage(image.filename)}>DELETE</button> 
-                                {/*still testing this -->*/}
                             </td>
                         </tr>
                     ))}
                       </tbody>
                   </table>
+                  
           </div>}
 
           {isBlog && <div>

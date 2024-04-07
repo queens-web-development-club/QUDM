@@ -4,37 +4,16 @@ import './gallery.css';
 import Nav from "../components/nav/nav.js";
 import Image from "next/image";
 import Footer from "../components/footer/footer.js";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 
-const imageSrcs = [
-  { src: 'images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG' },
-  { src: 'images/gallery/IMG_0340.JPG' },
-  { src: 'images/gallery/IMG_0343.JPG' },
-  { src: 'images/gallery/IMG_0345.JPG' },
-  { src: 'images/gallery/IMG_0347.JPG' },
-  { src: 'images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG' },
-  { src: 'images/gallery/IMG_0340.JPG' },
-  { src: 'images/gallery/IMG_0343.JPG' },
-  { src: 'images/gallery/IMG_0345.JPG' },
-  { src: 'images/gallery/IMG_0347.JPG' },
-  { src: 'images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG' },
-  { src: 'images/gallery/IMG_0340.JPG' },
-  { src: 'images/gallery/IMG_0343.JPG' },
-  { src: 'images/gallery/IMG_0345.JPG' },
-  { src: 'images/gallery/IMG_0347.JPG' },
-  { src: 'images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG' },
-  { src: 'images/gallery/IMG_0340.JPG' },
-  { src: 'images/gallery/IMG_0343.JPG' },
-  { src: 'images/gallery/IMG_0345.JPG' },
-  { src: 'images/gallery/IMG_0347.JPG' },
-];
+
 
 export default function Gallery() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  const [imageSrcs, setImageSrcs] = useState([]);
   const handleImageClick = (index) => {
     setCurrentImageIndex(index);
     setIsLightboxOpen(true);
@@ -55,9 +34,29 @@ export default function Gallery() {
     setCurrentImageIndex((currentImageIndex + 1) % imageSrcs.length);
   };
 
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('/api/images/get');
+        if (!response.ok) {
+          throw new Error('Failed to fetch images');
+        }
+        const imageData = await response.json();
+        setImageSrcs(imageData.map(image => ({
+          src: `/api/images/${encodeURIComponent(image.filename)}`,
+          filename: image.filename,
+          dateOfCreation: image.dateOfCreation
+        })));
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+    fetchImages();
+  }, []);//for getting da images from db
+
   return (
     <div className="body">
-      <GalleryContainer handleImageClick={handleImageClick} />
+      <GalleryContainer handleImageClick={handleImageClick} imageSrcs={imageSrcs} />{/*added the imgsrcs to the gallery cont*/}
       {isLightboxOpen && (
         <div className="lightbox-backdrop" onClick={handleLightboxClose}>
           <LightboxContainer
@@ -72,7 +71,7 @@ export default function Gallery() {
   );
 }
 
-const GalleryContainer = ({ handleImageClick }) => {
+const GalleryContainer = ({ handleImageClick, imageSrcs}) => {
   return (
     <div className="gallery-container">
       <Nav />
@@ -82,21 +81,21 @@ const GalleryContainer = ({ handleImageClick }) => {
       </div>
       <div className="image-grid">
         {imageSrcs.map((image, index) => (
-          <div
-            key={index}
-            className="image-wrapper"
-            onClick={() => handleImageClick(index)}
-          >
-            <img
-              src={image.src}
-              alt={`Image ${index}`}
-              style={{
-                width: 'auto',
-                height: '300px',
-                objectFit: 'cover',
-              }}
-            />
-          </div>
+        <div
+          key={index}
+          className="image-wrapper"
+          onClick={() => handleImageClick(index)}
+        >
+          <img
+            src={image.src}
+            alt={`Image ${index}`}
+            style={{
+              width: 'auto',
+              height: '300px',
+              objectFit: 'cover',
+            }}
+          />
+        </div>
         ))}
       </div>
       <Footer />

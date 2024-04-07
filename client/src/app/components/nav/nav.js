@@ -15,7 +15,7 @@ const Navbar = () => {
               </a>
             </div>
 
-            <h1><span class="highlight-container"><span class="highlight">Queen's Dance Marathon</span></span></h1>
+            <h1><span className="highlight-container"><span className="highlight">Queen's Dance Marathon</span></span></h1>
 
             <div className="main-menu">
               <ul>

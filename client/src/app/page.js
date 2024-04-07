@@ -54,8 +54,8 @@ export default function Home() {
       <div className="main-frame">
         <div className="left-grid">
 
-          <div class="left-title">
-            <span class="our-events">Dancing for Miracles, Moving for a Cause!</span>
+          <div className="left-title">
+            <span className="our-events">Dancing for Miracles, Moving for a Cause!</span>
           </div>
 
 
