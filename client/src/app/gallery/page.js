@@ -39,7 +39,7 @@ export default function Gallery() {
         }
         const imageData = await response.json();
         setImageSrcs(imageData.map(image => ({
-          src: `/api/images/${encodeURIComponent(image.filename)}`,
+          src: `/api/images/galleryImages/${encodeURIComponent(image.filename)}`,
           filename: image.filename,
           dateOfCreation: image.dateOfCreation
         })));

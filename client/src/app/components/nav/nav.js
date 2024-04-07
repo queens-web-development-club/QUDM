@@ -10,7 +10,7 @@ const Navbar = () => {
           <div className="container">
             <div className="logo">
               <a href="/">
-              <img src="images/logo/QUDM-logo.png" alt="logo" />
+              <img src={`/api/images/iconImages/${encodeURIComponent("QUDM-logo.png")}`} alt="logo" />
               {/* <div className = 'overlay-image'/> This is the glowy logo */} 
               </a>
             </div>
@@ -32,7 +32,7 @@ const Navbar = () => {
                   <a href="/blog">Blog</a>
                 </li>
                 <li>
-                  <a className="btn" href="#">
+                  <a className="btn" href="https://cheofoundation.donordrive.com/index.cfm?fuseaction=donorDrive.personalCampaign&participantID=44111" target="_blank" rel="noopener noreferrer">
                     <i className="fas fa-user"></i> Donate
                   </a>
                 </li>

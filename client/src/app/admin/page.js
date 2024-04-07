@@ -183,7 +183,7 @@ const handleDeleteImage = async (filename) => {
                             <td>{image.filename}</td>
                             <td>
                                 <img 
-                                    src={`api/images/${encodeURIComponent(image.filename)}`} 
+                                    src={`api/images/galleryImages/${encodeURIComponent(image.filename)}`} 
                                     alt={image.filename} 
                                     style={{ width: '200px', height: 'auto' }} 
                                     onLoad={() => console.log('Image loaded:', image.path)}

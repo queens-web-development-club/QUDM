@@ -145,12 +145,13 @@ app.get('/api/images/get', (req, res) => {
     });
 });
 // Endpoint to fetch a specific image by filename
-app.get('/api/images/:filename', (req, res) => {
-    const imageDir = path.join(__dirname, 'database', 'galleryImages'); //Construct absolute path to image directory
+app.get('/api/images/:folder/:filename', (req, res) => {
+    const baseDir = path.join(__dirname, 'database'); // Base directory where all image folders are stored
+    const folder = req.params.folder;
     const filename = req.params.filename;
 
     // Construct the full path to the image file
-    const imagePath = path.join(imageDir, filename);
+    const imagePath = path.join(baseDir, folder, filename);
 
     // Check if the file exists
     fs.access(imagePath, fs.constants.F_OK, (err) => {
