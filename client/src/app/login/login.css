@@ -1,7 +1,11 @@
 
+
 .main {
   display: flex;
   justify-content: center;
+  
+  width: 100%;
+  
 }
 
 .form-div {
@@ -17,9 +21,9 @@
 
   padding: 0px;
 
-  background-color: rgb(239, 253, 255);
+  background-color: white;
   border-style: solid;
-  border-color: rgb(239, 253, 255);
+  border-color: white;
   border-width: 50px;
   border-top-width: 20px;
   border-bottom-width: 30px;
@@ -28,7 +32,7 @@
 
   outline-style: solid;
   outline-width: 5px;
-  outline-color: #85949b;
+  outline-color: #858f9b;
   
 }
 

@@ -213,7 +213,49 @@ app.get('/api/users/get', (req, res) => {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     })
-  });
+});
+
+//Edit user password
+app.put('/api/user/put/:email', (req, res) => {
+    fs.readFile('./database/data.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        try {
+            const jsonData = JSON.parse(data);
+            console.log(jsonData);
+    
+            // Extract email and password from request body
+            const { email, password } = req.body;
+    
+            // Update email's password if email matches
+            if (jsonData.auth.email === email) {
+                jsonData.auth.password = password;
+            }
+    
+            // Update statistics if necessary
+            // For example, let's say you want to update stat1 to a new value
+            // Replace 'newStatValue' with the new value you want to set for stat1
+            jsonData.statistics.stat1 = newStatValue;
+    
+            // Now, write the modified JSON back to the file
+            fs.writeFile('./database/data.json', JSON.stringify(jsonData, null, 2), (err) => {
+                if (err) {
+                    console.error('Error writing file:', err);
+                    return res.status(500).json({ error: 'Internal Server Error' });
+                }
+                res.json({ message: 'Data updated successfully' });
+            });
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
+})
+    
+
+    
 
 // RUN server on port (put at end)
 app.listen(PORT, () => {
