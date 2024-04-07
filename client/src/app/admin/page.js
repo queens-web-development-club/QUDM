@@ -20,7 +20,8 @@ const Admin = () => {
   const [stats, setStats] = useState([]);
   const [selectedStatId, setSelectedStatId] = useState(null);
   const [editedStat, setEditedStat] = useState('');
-
+  const [images, setImages] = useState([]);
+  const [deleteMessage, setDeleteMessage] = useState('');
   useEffect(() => {
     if (!authData.isAuthenticated) {
       alert("NOT LOGGED IN");
@@ -61,22 +62,39 @@ const Admin = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-          const response = await fetch('http://localhost:3002/api/stats/get');
-          const statsData = await response.json();
-          console.log(statsData);
+        const response = await fetch('http://localhost:3002/api/stats/get');
+        const statsData = await response.json();
+        console.log(statsData);
   
-          
-          const statsArray = Object.entries(statsData).map(([key, value]) => ({ id: key, data: value }));
+        const statsArray = Object.entries(statsData).map(([key, value]) => ({ id: key, data: value }));
   
-          setStats(statsArray); // Set the state to the array
+        setStats(statsArray); // Set the state to the array
       } catch (error) {
-          console.error('Error fetching statistics:', error);
+        console.error('Error fetching statistics:', error);
       }
-  };
-
+    };
+  
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('http://localhost:3002/api/images/get');
+        if (!response.ok) {
+          throw new Error('Failed to fetch images');
+        }
+        const imageData = await response.json();
+        if (!Array.isArray(imageData)) {
+          throw new Error('Invalid image data received');
+        }
+        setImages(imageData);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+        // Optionally, handle the error by setting a default value for images or showing an error message to the user
+        setImages([]); // Set images to an empty array or handle the error in another way
+      }
+    };
+  
+    fetchImages();
     fetchStats();
-}, []);
-
+  }, []);
 
 
   const handleEditStat = async () => {
@@ -112,6 +130,24 @@ const handleCloseForm = () => {
   setEditedStat('');
 };
 
+const handleDeleteImage = async (filename) => {
+  try {
+    const response = await fetch(`http://localhost:3002/api/images/${encodeURIComponent(filename)}`, {
+      method: 'DELETE'
+    });
+    if (response.status === 200) {
+      console.log('Image deleted successfully');
+      setDeleteMessage(`Deleted ${filename} image successfully`);
+      setTimeout(() => setDeleteMessage(''), 4500);
+      fetchImages();
+    } else {
+      console.error('Failed to delete image');
+    }
+  } catch (error) {
+    console.error('Error deleting image:', error);
+  }
+};
+
   return (
     <>
       <Nav/>
@@ -128,7 +164,39 @@ const handleCloseForm = () => {
           </div>}
 
           {isGallery && <div>
-            <p>Gallery Content</p>
+            <h1>Gallery Settings</h1>
+            {deleteMessage && <p style={{ color: 'red', fontSize: '24px', fontWeight: 'bold' }}>{deleteMessage}</p>}
+                  <table>
+                      <thead>
+                          <tr>
+                              <th>File Name</th>
+                              <th>Preview</th>
+                              <th>Date uploaded</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                      {images.map(image => (
+                        <tr key={image.filename}>
+                            <td>{image.filename}</td>
+                            <td>
+                                <img 
+                                    src={`http://localhost:3002/api/images/${encodeURIComponent(image.filename)}`} 
+                                    alt={image.filename} 
+                                    style={{ width: '200px', height: 'auto' }} 
+                                    onLoad={() => console.log('Image loaded:', image.path)}
+                                    onError={() => console.error('Error loading image:', image.path)}
+                                />
+                            </td>
+                            <td>{new Date(image.dateOfCreation).toLocaleString()}</td>
+                            <td>
+                              <button onClick={() => handleDeleteImage(image.filename)}>DELETE</button> 
+                                {/*still testing this -->*/}
+                            </td>
+                        </tr>
+                    ))}
+                      </tbody>
+                  </table>
           </div>}
 
           {isBlog && <div>

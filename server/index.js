@@ -13,6 +13,10 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
+
+//chris test
+const path = require('path');
+
 // Endpoint to send email
 app.post("/api/contact/get", (req, res) => {
     console.log("recieved")
@@ -96,6 +100,94 @@ app.put('/api/stats/put/:id', async (req, res) => {
             console.error('Error parsing JSON:', error);
             res.status(500).json({ error: 'Internal Server Error' });
         }
+    });
+});
+
+// Endpoint to fetch ALL image info  filename : path
+app.get('/api/images/get', (req, res) => {
+    const imageDir = 'database/galleryImages';
+
+    fs.readdir(imageDir, (err, files) => {
+        if (err) {
+            console.error('Error reading directory:', err);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+
+        // Filter out non-image files
+        const imageFiles = files.filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file));
+
+        // Array to store image information
+        const images = [];
+
+        // Iterate over image files
+        imageFiles.forEach(file => {
+            const filePath = path.join(imageDir, file);
+
+            // Get file stats to retrieve creation date
+            fs.stat(filePath, (err, stats) => {
+                if (err) {
+                    console.error('Error getting file stats:', err);
+                    return;
+                }
+
+                // Push image info with filename and creation date
+                images.push({
+                    filename: file,
+                    dateOfCreation: stats.birthtime // Get creation date
+                });
+
+                // If all files processed, send JSON response
+                if (images.length === imageFiles.length) {
+                    res.json(images);
+                }
+            });
+        });
+    });
+});
+// Endpoint to fetch a specific image by filename
+app.get('/api/images/:filename', (req, res) => {
+    const imageDir = path.join(__dirname, 'database', 'galleryImages'); //Construct absolute path to image directory
+    const filename = req.params.filename;
+
+    // Construct the full path to the image file
+    const imagePath = path.join(imageDir, filename);
+
+    // Check if the file exists
+    fs.access(imagePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.error('Error accessing file:', err);
+            return res.status(404).json({ error: 'Image not found' });
+        }
+
+        // If the file exists, send it as a response with appropriate content type
+        res.sendFile(imagePath);
+    });
+});
+
+app.delete('/api/images/:filename', (req, res) => {
+    const imageDir = path.join(__dirname, 'database', 'galleryImages'); // Construct absolute path to image directory
+    const filename = req.params.filename;
+
+    // Construct the full path to the image file
+    const imagePath = path.join(imageDir, filename);
+
+    // Check if the file exists
+    fs.access(imagePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.error('Error accessing file:', err);
+            return res.status(404).json({ error: 'Image not found' });
+        }
+
+        // If the file exists, delete it
+        fs.unlink(imagePath, (err) => {
+            if (err) {
+                console.error('Error deleting file:', err);
+                return res.status(500).json({ error: 'Internal server error' });
+            }
+            
+            console.log('Image deleted successfully');
+            res.status(200).json({ message: 'Image deleted successfully' });
+        });
     });
 });
 
