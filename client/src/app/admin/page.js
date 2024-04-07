@@ -14,10 +14,14 @@ import "./admin.css"
 const Admin = () => {
   const router = useRouter();
   const { authData } = useAuth();
+  const auth = useAuth()
 
   const [isUsers, setIsUsers] = useState(false);
   const [users, setUsers] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedUserEmail, setSelectedUserEmail] = useState(null)
+  const [editedPass, setEditedPass] = useState('');
+  
 
   const [isGallery, setIsGallery] = useState(false);
   const [isBlog, setIsBlog] = useState(false);
@@ -30,8 +34,6 @@ const Admin = () => {
   const [images, setImages] = useState([]);
   const [deleteMessages, setDeleteMessages] = useState([]);
 
-
-
   useEffect(() => {
     if (!authData.isAuthenticated) {
       alert("NOT LOGGED IN");
@@ -39,7 +41,7 @@ const Admin = () => {
     } else {
       console.log("LOGGED IN")
     }
-  }, [authData.isAuthenticated, router]);
+  }, []);
 
   const handleUsersClick = () => {
     setIsUsers(true);
@@ -152,9 +154,33 @@ const Admin = () => {
     }
   }
 
+  const handleEditUser = async () => {
+  
+    try {
+        const response = await fetch(`api/user/put/${selectedUserEmail}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data: editedStat })
+        });
+        if (response.status === 200) {
+            console.log('Stat updated successfully');
+
+            
+
+            handleCloseForm()
+        } else {
+            console.error('Failed to update stat');
+        }
+    } catch (error) {
+        console.error('Error updating stat:', error);
+    }
+  }
+
 const handleCloseForm = () => {
   setSelectedStatId(null);
   setEditedStat('');
+  setSelectedUserEmail(null);
+  setEditedPass('');
 };
 
 const handleDeleteImage = async (filename) => {
@@ -180,11 +206,18 @@ const handleShowPassword = () => {
   setShowPassword(prevState => !prevState) 
 };
 
+const handleLogout = (event) => {
+  auth.logout()
+  router.push('/login')
+}
+
   return (
     <>
       <Nav/>
         <div>
+          
           <div>
+            <button onClick={handleLogout}>Logout</button>
             <button onClick={handleUsersClick} disabled={isUsers}>Users</button>
             <button onClick={handleGalleryClick} disabled={isGallery}>Gallery</button>
             <button onClick={handleBlogClick} disabled={isBlog}>Blog</button>
@@ -208,24 +241,24 @@ const handleShowPassword = () => {
                     <td>{showPassword ? users.password : '********'}</td>
                     <td>
                       <button onClick={handleShowPassword}>{showPassword ? 'Hide' : 'Show'}</button>
-                      <button onClick={() => handleEditUser(users.email)}>Edit</button>
+                      <button onClick={() => setSelectedUserEmail(users.email)}>Edit</button>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              {/* {selectedUserEmail && (
+              {selectedUserEmail && (
                 <div className="edit-form">
                   <h2>Edit User {selectedUserEmail}</h2>
                   <input 
                     type="text" 
-                    value={editedUser.password} 
-                    onChange={(e) => setEditedUser({...editedUser, password: e.target.value})} 
+                    value={editedPass} 
+                    onChange={(e) => setEditedPass(e.target.value)} 
                     placeholder="Enter new password" 
                   />
-                  <button onClick={handleSaveUser}>Save</button>
-                  <button onClick={handleCloseUserForm}>Close</button>
+                  <button onClick={handleEditUser}>Save</button>
+                  <button onClick={handleCloseForm}>Close</button>
                 </div>
-              )} */}
+              )}
             </div>
           )}
 
