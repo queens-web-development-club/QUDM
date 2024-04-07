@@ -6,12 +6,23 @@
     padding-bottom: var(--nav-height);
 }
 
+.elements {
+    min-height: 1000px;
+}
+
+.blogHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-top: 2rem;
+}
+
 .postsContainer {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 14px;
+    min-height: 600px;
 }
-  
+
 .postCard {
     padding: 50px;
     background: white;

@@ -12,6 +12,11 @@ export default function blog(){
             <div className="nav">
                 <Nav/>
             </div>
+            <div className="blogHeader">
+                <h2>Blog</h2>
+                <p>Keep up to date with QUDM!</p>
+            </div>
+            <div className="elements">
             <div className="postContainer">
                 {postMetadata.map((post, postIndex) => {
                     return(
@@ -19,7 +24,10 @@ export default function blog(){
                     )
                 })}
             </div>
-            <Footer/>
+            </div>
+            <div className="Footer">
+                <Footer/>
+            </div>
         </main>
     )
 }
