@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
 import { useAuth } from '../auth/authContext';
 
+
 import Nav from "../components/nav/nav.js";
 import Footer from "../components/footer/footer.js";
+
 
 import "./admin.css"
 
@@ -27,6 +29,9 @@ const Admin = () => {
 
   const [images, setImages] = useState([]);
   const [deleteMessages, setDeleteMessages] = useState([]);
+
+
+
   useEffect(() => {
     if (!authData.isAuthenticated) {
       alert("NOT LOGGED IN");
@@ -262,7 +267,28 @@ const handleShowPassword = () => {
           </div>}
 
           {isBlog && <div>
-            <p>Blog Content</p>
+            <h1>Blog Posts</h1>
+                  <table>
+                      <thead>
+                          <tr>
+                              <th>File Name</th>
+                              <th>Metadata</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                            <td>blog1</td>
+                            <td>Title: Test Blog Post 1 | Written by: Xavier A. | Date: 2024-03-28</td>
+                            <td><button>Delete</button></td>
+                          </tr>
+                          <tr>
+                            <td>blog2</td>
+                            <td>Title: Test Blog Post 2 | Written by: Xavier A. | Date: 2024-03-28</td>
+                            <td><button>Delete</button></td>
+                          </tr>
+                      </tbody>
+                  </table>
           </div>}
 
           {isStats && <div>
