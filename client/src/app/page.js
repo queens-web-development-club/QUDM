@@ -60,9 +60,12 @@ export default function Home() {
       <div className="main-frame">
         <div className="left-grid">
 
-          <div className="left-title">
-            <span className="our-events">Dancing for Miracles, Moving for a Cause!</span>
-          </div>
+        <div className="left-title">
+            <span className="our-events">
+                <p className="slogan">Dancing for Miracles, </p>
+                <p className="slogan1">Moving for a Cause! </p>
+            </span>
+        </div>
 
 
           <div className="our-events-message">
@@ -125,7 +128,7 @@ export default function Home() {
           <div className="right-grid-image">
             <div className="image-container">
               <div className="home-picture">
-                <img src="images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG" alt="Blank Image" />
+                <img className = "home-image" src="images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG" alt="Blank Image" />
               </div>
             </div>
           </div>

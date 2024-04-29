@@ -1,8 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
+
 .circles-main {
     height: 700px;
     overflow: hidden;
     margin: 0;
     padding: 0;
+}
+
+/*new*/
+.home-image{
+    height: auto;
+    min-width: 140%;
+    margin-left: -7vh;
+    margin-top: -5vh;
 }
 
 @media screen and (max-width: 1920px) and (max-height: 1080px) {
@@ -250,33 +261,44 @@
 
 .main-frame {
     display: grid;
-    height: 600px;
+    height: 600px; /*new*/
     margin-bottom: 60px;
     margin-top: 100px;
 }
 
 .left-grid {
     grid-column-start: 1;
-    
     background-color: #253746;
+    height: 600px;
     
 }
 
 .left-title {
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 5vh; /*new*/
+    margin-bottom: 0px; /*new*/
 }
 
 .our-events {
-    font-size: 40px;
     font-weight: bold;
     color: white;
     padding-left: 100px;
     padding-right: 100px;
-    margin-top: 30px;
-    font-family: Helvetica, sans-serif;
     
+}
+
+/*new*/
+.slogan{
+    font-size: 60px;
+    font-family: "Fredoka", sans-serif;
+}
+
+/*new*/
+.slogan1{
+    padding-left: 5vh;
+    font-size: 60px;
+    font-family: "Fredoka", sans-serif;
 }
 
 @keyframes shadow-color-change {
@@ -290,7 +312,7 @@
     color: black;
     margin-left: 100px;
     margin-right: 100px;
-    margin-top: 100px;
+    margin-top: 50px; /*was 100*/
     font-size: 20px;
     font-family: 'inherit', Helvetica, sans-serif;
     display: flex;
@@ -376,12 +398,13 @@
     display: flex;
     justify-content: left;
     margin-left: 100px;
-    margin-top: 100px;
+    margin-top: 50px; /*was 100*/
     
 }
 
 
 .cssbuttons-io-button {
+    
     background: #ffd500;
     color: #253746;
     font-family: inherit;
