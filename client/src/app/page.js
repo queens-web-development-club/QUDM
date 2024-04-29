@@ -15,10 +15,16 @@ import React, { useRef, useState, useEffect } from 'react';
 export default function Home() {
 
   const nextSectionRef = useRef(null);
+  const nextNextSectionRef = useRef(null);
+
   const [stats, setStats] = useState([]);
 
   const scrollToNextSection = () => {
     nextSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToNextNextSection = () => {
+    nextNextSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -91,9 +97,30 @@ export default function Home() {
                 </svg>
               </div>
             </button>
-          </div>
 
+            <button onClick={scrollToNextNextSection} className="cssbuttons-io-button">
+              Contact Us
+              <div className="icon">
+                <svg
+                  height="24"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+                  <path
+                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+
+            
+
+          </div>
         </div>
+
         <div className="right-grid">
           <div className="right-grid-image">
             <div className="image-container">
@@ -133,7 +160,7 @@ export default function Home() {
       </section>
       
       {/*ABOUT SECTION*/}
-      <section className="about-section">
+      <section className="about-section" ref={nextNextSectionRef}>
       <div className="about-container">
         <div className="left">
         </div>
@@ -146,6 +173,9 @@ export default function Home() {
                 100% of QUDM's efforts provide hope & care for the kids at the Children's Hospital of Eastern Ontario (CHEO)! 
                 The funds raised by our events help cover the cost of medical equipment, charitable care, medical research, and patient services.
               </p>
+              <br></br>
+              <br></br>
+              
             </div>
           </div>
         </div>
@@ -154,9 +184,10 @@ export default function Home() {
     </section>
     
     {/*END OF ABOUT SECTION*/}
-    <section>
+    <section className = "contact-section">
         <Contact/>
     </section>
+    
 
     {/*FOOTER SECTION*/}
     <Footer/>

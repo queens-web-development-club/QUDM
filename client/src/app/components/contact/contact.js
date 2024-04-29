@@ -25,9 +25,34 @@ const Contact = () => {
     if (!validateEmail(email)) {
       setEmailError('Please enter a valid email address');
     } else {
-      // Form submission logic here
+      try {
+        const response = await fetch('api/contact/post', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            message: message,
+          }),
+        });
+        if (response.ok) {
+          setName('');
+          setEmail('');
+          setMessage('');
+          setEmailError('');
+          alert('Form submitted successfully!');
+        } else {
+          alert('Error submitting form. Please try again later.');
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('Error submitting form. Please try again later.');
+      }
     }
   };
+
 
   // Dynamic styles for smooth height transition
   const formStyle = {

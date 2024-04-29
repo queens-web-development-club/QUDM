@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const PORT = 3002;
@@ -18,14 +19,38 @@ app.use(bodyParser.json());
 const path = require('path');
 
 // Endpoint to send email
-app.post("/api/contact/get", (req, res) => {
+app.post("/api/contact/post", async (req, res) => {
     console.log("recieved")
     const { name, email, message } = req.body;
     console.log(name, email, message);
 
-    // Add code to send email here
+    // Create a Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'owensawler4@gmail.com',
+            pass: 'dhdt ftot llnj knkt' //please dont spam me rn
+        }
+    });
 
-    res.status(200).send('Email sent successfully');
+    // Define email content
+    const mailOptions = {
+        from: `${email}`,
+        to: 'owensawler4@gmail.com',
+        subject: 'New Message from Contact Form',
+        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+    };
+
+    try {
+        // Send the email
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully');
+        res.status(200).send('Email sent successfully');
+      } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).send('Error sending email');
+      }
+
 });
 
 //Endpoint to check auth
