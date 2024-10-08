@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.7.3",
     "@nextui-org/react": "^2.2.10",
     "framer-motion": "^11.0.14",
     "gray-matter": "^4.0.3",
