@@ -1,7 +1,7 @@
 [build]
-  base = "client"
-  publish = "client/.next"
-  command = "npm run build"
+  base = "client"             # Base directory where the command is executed
+  publish = ".next"           # Publish directory relative to the base
+  command = "npm run build"   # Command to build the project
 
 [[redirects]]
   from = "/*"
