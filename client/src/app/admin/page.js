@@ -25,6 +25,7 @@ const Admin = () => {
 
   const [isGallery, setIsGallery] = useState(false);
   const [isBlog, setIsBlog] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [isStats, setIsStats] = useState(false);
   const [stats, setStats] = useState([]);
@@ -33,6 +34,7 @@ const Admin = () => {
 
   const [images, setImages] = useState([]);
   const [deleteMessages, setDeleteMessages] = useState([]);
+
 
   useEffect(() => {
     if (!authData.isAuthenticated) {
@@ -202,6 +204,35 @@ const handleDeleteImage = async (filename) => {
   }
 };
 
+const handleUploadImage = async () => {
+  if (!selectedImage) {
+      alert('Please select an image first.');
+      return;
+  }
+
+  const formData = new FormData();
+  formData.append('image', selectedImage);
+
+  try {
+      const response = await fetch('/api/images/upload', {
+          method: 'POST',
+          body: formData,
+      });
+
+      if (!response.ok) {
+          throw new Error('Failed to upload image');
+      }
+
+      const data = await response.json();
+      console.log('Upload successful:', data.message);
+      alert('Image uploaded successfully!');
+      setSelectedImage(null); // Reset the selected image after upload
+  } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Error uploading image. Please try again.');
+  }
+};
+
 const handleShowPassword = () => {
   setShowPassword(prevState => !prevState) 
 };
@@ -264,6 +295,8 @@ const handleLogout = (event) => {
 
           {isGallery && <div>
             <h1>Gallery Settings</h1>
+            <input type="file" accept=".png, .jpg, .jpeg"/>
+            <button onClick={() => handleUploadImage()}>Upload</button> 
             {deleteMessages.map((message, index) => (
               <p key={index} style={{ color: 'red', fontSize: '24px', fontWeight: 'bold' }}>{message}</p>))}
                   <table>

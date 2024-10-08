@@ -3,6 +3,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const multer = require('multer');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
@@ -188,6 +189,37 @@ app.get('/api/images/:folder/:filename', (req, res) => {
         // If the file exists, send it as a response with appropriate content type
         res.sendFile(imagePath);
     });
+});
+
+// Set up multer storage configuration
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const uploadDir = path.join(__dirname, 'database', 'galleryImages');
+        
+        // Ensure the upload directory exists
+        fs.exists(uploadDir, (exists) => {
+            if (!exists) {
+                fs.mkdirSync(uploadDir, { recursive: true });
+            }
+            cb(null, uploadDir);
+        });
+    },
+    filename: (req, file, cb) => {
+        // You can customize the filename here
+        cb(null, file.originalname); // Keep original file name
+    }
+});
+
+// Initialize multer with the storage configuration
+const upload = multer({ storage: storage });
+
+app.post('/api/images/upload', upload.single('image'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    console.log('Image uploaded successfully:', req.file.filename);
+    res.status(200).json({ message: 'Image uploaded successfully', filename: req.file.filename });
 });
 
 app.delete('/api/images/:filename', (req, res) => {
