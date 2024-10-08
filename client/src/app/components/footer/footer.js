@@ -15,7 +15,9 @@ const Footer = () => {
                 <a href="https://linktr.ee/qudancemarathon" target="_blank" rel="noopener noreferrer">
                     <img src={`/api/images/iconImages/${encodeURIComponent("logo_linktree.png")}`}  alt="logo" className="logo-img"></img>
                 </a>
+                
             </div>
+            
         </footer>
     )
 }
