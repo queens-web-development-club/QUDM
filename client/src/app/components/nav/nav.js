@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
+
 import './nav.css';
 
 
@@ -10,7 +11,8 @@ const Navbar = () => {
           <div className="container">
             <div className="logo">
               <a href="/">
-              <img src={`/api/images/iconImages/${encodeURIComponent("QUDM-logo.png")}`} alt="logo" />
+              {/* <img src={`/api/images/iconImages/${encodeURIComponent("QUDM-logo.png")}`} alt="logo" /> */}
+              <img src="/images/logo/QUDM-logo.png" alt="logo"/>
               {/* <div className = 'overlay-image'/> This is the glowy logo */} 
               </a>
             </div>
