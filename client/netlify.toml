@@ -1,6 +1,6 @@
 [build]
   base = "client"
-  publish = "client/.next"
+  publish = ".next"
   command = "npm run build"
 
 [[redirects]]
