@@ -1,8 +1,3 @@
-[[plugins]]
-  package = "@netlify/plugin-buildbot"
-
-  [plugins.inputs]
-    base = "main"
 
 [build]
   command = "ls -al && npm run build"
