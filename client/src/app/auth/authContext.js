@@ -20,10 +20,9 @@ export const AuthProvider = ({children}) => {
     
   //Login function that sets the value of this object as well as included isLoggedIn in the session storage
   const login = () => {
-    setAuthData({isAuthenticated: true})
-    sessionStorage.setItem("isLoggedIn", "true")
-    //that looks like this "isLoggedIn": "true"
-  }
+    setAuthData({ isAuthenticated: true });
+    sessionStorage.setItem("isLoggedIn", "true");
+  };
 
   //Logout function that sets the value of everything in the object to null or false and then removed the item from the session storage.
   const logout = () => {

@@ -30,20 +30,32 @@ export default function Home() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-          const response = await fetch('http://localhost:3002/api/stats/get');
-          const statsData = await response.json();
-          console.log(statsData);
+        // Adjust the URL to remove the .js extension and use the correct path
+        const response = await fetch('/.netlify/functions/get-stats', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'same-origin' // or 'include' depending on your setup
+        });
   
-          const statsArray = Object.entries(statsData).map(([key, value]) => ({ id: key, data: value }));
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
   
-          setStats(statsArray); // Set the state to the array
+        const statsData = await response.json();
+        console.log(statsData);
+  
+        const statsArray = Object.entries(statsData).map(([key, value]) => ({ id: key, data: value }));
+        setStats(statsArray);
       } catch (error) {
-          console.error('Error fetching statistics:', error);
+        console.error('Error fetching statistics:', error);
       }
-  };
-
+    };
+  
     fetchStats();
-}, []);
+  }, []);
+  
   
   return (
     <div className="grainy">
@@ -128,7 +140,7 @@ export default function Home() {
           <div className="right-grid-image">
             <div className="image-container">
               <div className="home-picture">
-                <img className = "home-image" src="images/gallery/5D86D980-FAA1-4C03-8B8C-A1155A8EC381.JPG" alt="Blank Image" />
+                <img className = "home-image" src="images/home/home.JPG" alt="Blank Image" />
               </div>
             </div>
           </div>

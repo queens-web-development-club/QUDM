@@ -1,7 +1,6 @@
 [build]
-  base = "client"             # Base directory where the command is executed
-  publish = ".next"           # Publish directory relative to the base
-  command = "npm run build"   # Command to build the project
+  command = "npm run build"
+  functions = "netlify/functions"
+  publish = "dist"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+

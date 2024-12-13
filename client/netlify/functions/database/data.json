@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "email": "test@gmail.com",
+    "passwordHash": "$2b$10$VjDy0bgYI6iZPZZsDjse.uOYue0kN2CrL27hsuUGzcUWl0pLcn3Jm"
+  },
+  "statistics": {
+    "stat1": 27169,
+    "stat2": "2019",
+    "stat3": "6"
+  }
+}

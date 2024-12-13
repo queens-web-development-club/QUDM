@@ -1,74 +1,59 @@
+"use client"
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import './team.css';
-import Nav from "../components/nav/nav.js"; 
-import React from "react";
-import Footer from '../components/footer/footer';
+import Nav from "../components/nav/nav.js";
+import Footer from "../components/footer/footer";
 
 const PagesTeam = () => {
+  const [team, setTeam] = useState([]);
 
+  const fetchTeam = async () => {
+    try {
+      const response = await fetch("/.netlify/functions/get-team");
+      if (!response.ok) {
+        throw new Error("Failed to fetch team");
+      }
+      const teamData = await response.json();
+      setTeam(teamData);
+    } catch (error) {
+      console.error("Error fetching team:", error);
+    }
+  };
 
-
+  useEffect(() => {
+    fetchTeam();
+  }, []);
 
   return (
-    <div class="main">
+    <div className="team-page">
       <Nav />
-      <section class="main-container">
+      <div className="team-container">
+        <h1 className="team-title">Meet Our Team</h1>
         
-        <div class="title-team">
-          <div class="title-text">
-            Meet The Team!
-          </div>
-        </div>
-        <div class="grid">
-          
-          <div class="image-container">
-            <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Blank Image" width={500} height={600} />
-          
-          </div>
-
-          <div class="image-container">
-            <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Blank Image" width={500} height={600} />
-          </div>
-
-          <div class="image-container">
-            <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Blank Image" width={500} height={600} />
-          </div>
-
-          <div class="image-container">
-            <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Blank Image" width={500} height={600} />
-          </div>
-
-          
-          
-          
-        </div>
-        <div class="club-container"> 
-          <div class="club-team">
-            <div class="club-text">
-              The Club!
+        <div className="team-grid">
+          {team.map((member, index) => (
+            <div key={index} className="team-member-card">
+              <div className="team-member-image-wrapper">
+                <Image
+                  src={member.imageUrl}
+                  alt={member.name}
+                  layout="fill"
+                  objectFit="cover"
+                  className="team-member-image"
+                />
+              </div>
+              <div className="team-member-info">
+                <h3 className="team-member-name">{member.name}</h3>
+                <p className="team-member-title">{member.title}</p>
+              </div>
             </div>
-          </div>
-          
-
-          <div class="club">
-          
-            <div class="club-container-photo">
-              <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Blank Image" width={500} height={600} />
-            </div>
-            <div class="club-container-photo">
-              <Image src="https://images.unsplash.com/photo-1581260466152-d2c0303e54f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=50" alt="Blank Image" width={500} height={600} />
-            </div>
-
-        
-          </div>
-
+          ))}
         </div>
-      </section>
-
+      </div>
       <Footer />
     </div>
-    
-  )
-}
+  );
+};
 
 export default PagesTeam;

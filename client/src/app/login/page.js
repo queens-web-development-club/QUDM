@@ -12,7 +12,6 @@ import "./login.css";
 const Login = () => {
 
   const router = useRouter()
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,25 +19,31 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    console.log(password)
-
     try {
-      //Make post request to endpoint with the email and password passed as json in the body
-      const response = await fetch('http://localhost:3002/api/login/post', {
+      // Make post request to Netlify function endpoint
+      const response = await fetch('/.netlify/functions/get-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      //If email and password match, login user and redirect to /admin, otherwise send an alert
+  
       if (response.status === 200) {
-        console.log("status: 200")
-        auth.login(true);
-        router.push('/admin')
+        console.log("Login successful, status: 200");
+  
+        // Update auth context
+        auth.login();
+  
+        // Log to check if auth context is updated
+        console.log('Auth context after login:', auth);
+  
+        // Redirect to /admin
+        console.log('Redirecting to /admin');
+        router.push('/admin');
       } else {
         alert('Improper Email or Password');
       }
     } catch (err) {
-      console.error(err);
+      console.error('Login error:', err);
     }
   };
 

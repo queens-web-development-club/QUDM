@@ -1,8 +1,6 @@
 "use client"
-
 import './gallery.css';
 import Nav from "../components/nav/nav.js";
-import Image from "next/image";
 import Footer from "../components/footer/footer.js";
 import React, { useState, useEffect } from 'react';
 
@@ -10,13 +8,13 @@ export default function Gallery() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageSrcs, setImageSrcs] = useState([]);
+
   const handleImageClick = (index) => {
     setCurrentImageIndex(index);
     setIsLightboxOpen(true);
   };
 
   const handleLightboxClose = (e) => {
-    // Check if the click event target is the backdrop or one of its children
     if (e.target.classList.contains('lightbox-backdrop')) {
       setIsLightboxOpen(false);
     }
@@ -31,28 +29,27 @@ export default function Gallery() {
   };
 
   useEffect(() => {
+    // Fetch the images from the serverless function
     const fetchImages = async () => {
       try {
-        const response = await fetch('/api/images/get');
+        const response = await fetch('/.netlify/functions/get-g-images');
         if (!response.ok) {
           throw new Error('Failed to fetch images');
         }
-        const imageData = await response.json();
-        setImageSrcs(imageData.map(image => ({
-          src: `/api/images/galleryImages/${encodeURIComponent(image.filename)}`,
-          filename: image.filename,
-          dateOfCreation: image.dateOfCreation
-        })));
+
+        const imagePaths = await response.json();
+        setImageSrcs(imagePaths); // Set the image paths to state
       } catch (error) {
         console.error('Error fetching images:', error);
       }
     };
+
     fetchImages();
-  }, []);//for getting da images from db
+  }, []);
 
   return (
     <div className="body">
-      <GalleryContainer handleImageClick={handleImageClick} imageSrcs={imageSrcs} />{/*added the imgsrcs to the gallery cont*/}
+      <GalleryContainer handleImageClick={handleImageClick} imageSrcs={imageSrcs} />
       {isLightboxOpen && (
         <div className="lightbox-backdrop" onClick={handleLightboxClose}>
           <LightboxContainer
@@ -67,7 +64,7 @@ export default function Gallery() {
   );
 }
 
-const GalleryContainer = ({ handleImageClick, imageSrcs}) => {
+const GalleryContainer = ({ handleImageClick, imageSrcs }) => {
   return (
     <div className="gallery-container">
       <Nav />
@@ -76,22 +73,22 @@ const GalleryContainer = ({ handleImageClick, imageSrcs}) => {
         <p>Here are some of the most memorable moments from QUDM</p>
       </div>
       <div className="image-grid">
-        {imageSrcs.map((image, index) => (
-        <div
-          key={index}
-          className="image-wrapper"
-          onClick={() => handleImageClick(index)}
-        >
-          <img
-            src={image.src}
-            alt={`Image ${index}`}
-            style={{
-              width: 'auto',
-              height: '300px',
-              objectFit: 'cover',
-            }}
-          />
-        </div>
+        {imageSrcs.map((src, index) => (
+          <div
+            key={index}
+            className="image-wrapper"
+            onClick={() => handleImageClick(index)}
+          >
+            <img
+              src={src}
+              alt={`Image ${index}`}
+              style={{
+                width: 'auto',
+                height: '300px',
+                objectFit: 'cover',
+              }}
+            />
+          </div>
         ))}
       </div>
       <Footer />
@@ -104,22 +101,22 @@ const LightboxContainer = ({
   currentImageIndex,
   handlePrevImage,
   handleNextImage,
-  }) => {
-    return (
-      <div className="lightbox-container">
-        <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-          <button className="left-button" onClick={handlePrevImage}>
-            <img src="images/icons/left.png" alt="Previous" />
-          </button>
-          <img
-            src={imageSrcs[currentImageIndex].src}
-            alt="Lightbox"
-            className="lightbox-image"
-          />
-          <button className="right-button" onClick={handleNextImage}>
-            <img src="images/icons/right.png" alt="Next" />
-          </button>
-        </div>
+}) => {
+  return (
+    <div className="lightbox-container">
+      <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+        <button className="left-button" onClick={handlePrevImage}>
+          <img src="images/icons/left.png" alt="Previous" />
+        </button>
+        <img
+          src={imageSrcs[currentImageIndex]}
+          alt="Lightbox"
+          className="lightbox-image"
+        />
+        <button className="right-button" onClick={handleNextImage}>
+          <img src="images/icons/right.png" alt="Next" />
+        </button>
       </div>
-    );
+    </div>
+  );
 };

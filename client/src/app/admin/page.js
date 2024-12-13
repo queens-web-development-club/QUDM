@@ -32,6 +32,10 @@ const Admin = () => {
   const [selectedStatId, setSelectedStatId] = useState(null);
   const [editedStat, setEditedStat] = useState('');
 
+  const [isTeam, setIsTeam] = useState(false);
+  const [team, setTeam] = useState([]);
+  const [selectedTeamImage, setSelectedTeamImage] = useState(null);
+
   const [images, setImages] = useState([]);
   const [deleteMessages, setDeleteMessages] = useState([]);
 
@@ -39,9 +43,9 @@ const Admin = () => {
   useEffect(() => {
     if (!authData.isAuthenticated) {
       alert("NOT LOGGED IN");
-      router.push('/login')
+      router.push('/login');
     } else {
-      console.log("LOGGED IN")
+      console.log("LOGGED IN");
     }
   }, []);
 
@@ -50,6 +54,7 @@ const Admin = () => {
     setIsGallery(false);
     setIsStats(false);
     setIsBlog(false);
+    setIsTeam(false);
   };
 
   const handleGalleryClick = () => {
@@ -57,6 +62,7 @@ const Admin = () => {
     setIsGallery(true);
     setIsStats(false);
     setIsBlog(false);
+    setIsTeam(false);
   };
 
   const handleBlogClick = () => {
@@ -64,6 +70,7 @@ const Admin = () => {
     setIsGallery(false);
     setIsBlog(true);
     setIsStats(false);
+    setIsTeam(false);
   };
 
   const handleStatsClick = () => {
@@ -71,112 +78,155 @@ const Admin = () => {
     setIsGallery(false);
     setIsBlog(false);
     setIsStats(true);
+    setIsTeam(false);
   };
+
+  const handleTeamClick = () => {
+    setIsTeam(true);
+    setIsUsers(false);
+    setIsGallery(false);
+    setIsStats(false);
+    setIsBlog(false);
+  };
+  
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('api/stats/get');
+        const response = await fetch('/.netlify/functions/get-stats', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'same-origin' // or 'include' depending on your setup
+        });
+    
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    
         const statsData = await response.json();
-        // console.log(statsData);
-  
+        console.log(statsData);
+        
         const statsArray = Object.entries(statsData).map(([key, value]) => ({ id: key, data: value }));
-  
-        setStats(statsArray); // Set the state to the array
+        setStats(statsArray);
       } catch (error) {
         console.error('Error fetching statistics:', error);
       }
     };
   
+    
+  
     const fetchImages = async () => {
       try {
-        const response = await fetch('api/images/get');
+        const response = await fetch('/.netlify/functions/get-g-images'); // Adjust the API endpoint if necessary
         if (!response.ok) {
           throw new Error('Failed to fetch images');
         }
-        const imageData = await response.json();
-        if (!Array.isArray(imageData)) {
-          throw new Error('Invalid image data received');
-        }
-        setImages(imageData);
+  
+        const imagePaths = await response.json();
+        setImages(imagePaths); // Set the image paths to state
       } catch (error) {
         console.error('Error fetching images:', error);
-        // Optionally, handle the error by setting a default value for images or showing an error message to the user
-        setImages([]); // Set images to an empty array or handle the error in another way
       }
     };
+    
 
     const fetchUsers = async () => {
       try {
-        const response = await fetch('api/users/get');
+        const response = await fetch('/.netlify/functions/get-users');
         if (!response.ok) {
           throw new Error('Failed to fetch users');
         }
         const userData = await response.json();
-        console.log(userData)
+        console.log(userData);
         setUsers(userData);
-        console.log(users)
       } catch (error) {
         console.error('Error fetching users:', error);
-        setUsers({}); 
+        setUsers({}); // Optionally clear or display an error message
       }
     };
+
+    const fetchTeam = async () => {
+      try {
+        const response = await fetch('/.netlify/functions/get-team');
+        if (!response.ok) {
+          throw new Error('Failed to fetch team');
+        }
+        const teamData = await response.json();
+        setTeam(teamData); // Update state with the fetched team data
+      } catch (error) {
+        console.error('Error fetching team:', error);
+      }
+    };
+    
   
     fetchImages();
     fetchStats();
     fetchUsers();
+    fetchTeam();
   }, []);
 
 
   const handleEditStat = async () => {
-    if (!selectedStatId || !editedStat) return;
+    if (!editedStat) return; // Make sure editedStat is defined
     
     try {
-        const response = await fetch(`api/stats/put/${selectedStatId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data: editedStat })
-        });
-        if (response.status === 200) {
-            console.log('Stat updated successfully');
-
-            setStats(prevStats => prevStats.map(stat => {
-              if (stat.id === selectedStatId) {
-                return { ...stat, data: editedStat };
-              }
-              return stat;
-            }));
-
-            handleCloseForm()
-        } else {
-            console.error('Failed to update stat');
-        }
+      const response = await fetch(`/.netlify/functions/edit-stats`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          selectedStatId,  // Pass selectedStatId in the body
+          data: editedStat  // Pass the new value for the statistic
+        })
+      });
+  
+      if (response.status === 200) {
+        console.log('Stat updated successfully');
+  
+        // Update stats locally after the PUT request
+        setStats(prevStats => prevStats.map(stat => {
+          if (stat.id === selectedStatId) {
+            return { ...stat, data: editedStat };
+          }
+          return stat;
+        }));
+  
+        handleCloseForm();
+      } else {
+        console.error('Failed to update stat');
+      }
     } catch (error) {
-        console.error('Error updating stat:', error);
+      console.error('Error updating stat:', error);
     }
-  }
+  };
+
+  
 
   const handleEditUser = async () => {
-  
+    if (!selectedUserEmail || !editedPass) return;
+    
     try {
-        const response = await fetch(`api/user/put/${selectedUserEmail}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data: editedStat })
-        });
-        if (response.status === 200) {
-            console.log('Stat updated successfully');
-
-            
-
-            handleCloseForm()
-        } else {
-            console.error('Failed to update stat');
-        }
+      const response = await fetch('/.netlify/functions/get-users', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          email: selectedUserEmail, 
+          password: editedPass 
+        })
+      });
+      
+      if (response.status === 200) {
+        console.log('User updated successfully');
+        handleCloseForm();
+      } else {
+        console.error('Failed to update user');
+        // Optional: Add error handling or user feedback
+      }
     } catch (error) {
-        console.error('Error updating stat:', error);
+      console.error('Error updating user:', error);
     }
-  }
+  };
 
 const handleCloseForm = () => {
   setSelectedStatId(null);
@@ -187,51 +237,146 @@ const handleCloseForm = () => {
 
 const handleDeleteImage = async (filename) => {
   try {
-    const response = await fetch(`api/images/${encodeURIComponent(filename)}`, {
-      method: 'DELETE'
+    const response = await fetch('/.netlify/functions/del-g-images', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename }),
     });
-    if (response.status === 200) {
-      console.log('Image deleted successfully');
-      const newDeleteMessage =`Deleted ${filename} image successfully`;
-      //setTimeout(() => setDeleteMessage(''), 4500); timeout to make messages disappear
-      setDeleteMessages(prevMessages => [...prevMessages, newDeleteMessage]);
-      setImages(prevImages => prevImages.filter(image => image.filename !== filename));//refresh the list of imgs
-    } else {
-      console.error('Failed to delete image');
+
+    if (!response.ok) {
+      throw new Error('Failed to delete image');
     }
+
+    // Remove the image from the list of displayed images
+    setImages((prevUrls) => prevUrls.filter((url) => !url.includes(filename)));
+
+    setDeleteMessages([`Successfully deleted ${filename}`]);
   } catch (error) {
     console.error('Error deleting image:', error);
+    setDeleteMessages([`Error deleting ${filename}`]);
   }
 };
 
+
 const handleUploadImage = async () => {
   if (!selectedImage) {
-      alert('Please select an image first.');
-      return;
+    alert('Please select an image first.');
+    return;
   }
 
-  const formData = new FormData();
-  formData.append('image', selectedImage);
-
   try {
-      const response = await fetch('/api/images/upload', {
-          method: 'POST',
-          body: formData,
+    // Convert image to base64
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedImage);
+    reader.onloadend = async () => {
+      const base64Image = reader.result;
+
+      const response = await fetch('/.netlify/functions/post-g-images', {
+        method: 'POST',
+        body: JSON.stringify({ image: base64Image }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
 
       if (!response.ok) {
-          throw new Error('Failed to upload image');
+        throw new Error('Failed to upload image');
       }
 
       const data = await response.json();
       console.log('Upload successful:', data.message);
+
+      // Update the image list with the new image URL
+      setImages((prevUrls) => [...prevUrls, data.imageUrl]);
+
       alert('Image uploaded successfully!');
-      setSelectedImage(null); // Reset the selected image after upload
+      setSelectedImage(null); // Clear the selected image
+    };
   } catch (error) {
-      console.error('Error uploading image:', error);
-      alert('Error uploading image. Please try again.');
+    console.error('Error uploading image:', error);
+    alert('Error uploading image. Please try again.');
   }
 };
+
+const handleUploadTeamImage = async () => {
+  const title = document.getElementById('team-title').value;
+  const name = document.getElementById('team-name').value;
+
+  if (!selectedTeamImage) {
+    alert('Please select an image first.');
+    return;
+  }
+
+  if (!title || !name) {
+    alert('Please fill out both Title and Name.');
+    return;
+  }
+
+  try {
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedTeamImage);
+    reader.onloadend = async () => {
+      const base64Image = reader.result.split(',')[1];  // Extract the base64 string without data URL prefix
+
+      const response = await fetch('/.netlify/functions/post-team-images', {
+        method: 'POST',
+        body: JSON.stringify({ title, name, image: base64Image }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload team image');
+      }
+
+      const data = await response.json();
+      console.log('Upload successful:', data.message);
+
+      // Update the image list with the new image URL
+      setImages((prevUrls) => [...prevUrls, data.imageUrl]);
+
+      alert('Team image uploaded successfully!');
+      setSelectedTeamImage(null);  // Reset the selected image after upload
+    };
+  } catch (error) {
+    console.error('Error uploading team image:', error);
+    alert('Error uploading image. Please try again.');
+  }
+};
+
+
+const handleDeleteTeamImage = async (imageUrl) => {
+  try {
+    // Extract only the filename from the imageUrl (e.g., 'title_name.jpg')
+    const filename = imageUrl.split('/images/team/').pop().trim();
+    console.log("FILENAME", filename)
+
+    if (!filename) {
+      alert('Invalid image URL');
+      return;
+    }
+
+    const response = await fetch('/.netlify/functions/del-team-images', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename }),  // Send the filename
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete team image');
+    }
+
+    setTeam((prevTeam) => prevTeam.filter((member) => member.imageUrl !== imageUrl));
+    alert('Team image deleted successfully!');
+  } catch (error) {
+    console.error('Error deleting team image:', error);
+    alert('Error deleting image. Please try again.');
+  }
+};
+
+
+
 
 const handleShowPassword = () => {
   setShowPassword(prevState => !prevState) 
@@ -251,6 +396,7 @@ const handleLogout = (event) => {
             <button onClick={handleLogout}>Logout</button>
             <button onClick={handleUsersClick} disabled={isUsers}>Users</button>
             <button onClick={handleGalleryClick} disabled={isGallery}>Gallery</button>
+            <button onClick={handleTeamClick} disabled={isTeam}>Team</button>
             <button onClick={handleBlogClick} disabled={isBlog}>Blog</button>
             <button onClick={handleStatsClick} disabled={isStats}>Stats</button>
           </div>
@@ -292,45 +438,109 @@ const handleLogout = (event) => {
               )}
             </div>
           )}
-
-          {isGallery && <div>
-            <h1>Gallery Settings</h1>
-            <input type="file" accept=".png, .jpg, .jpeg"/>
-            <button onClick={() => handleUploadImage()}>Upload</button> 
-            {deleteMessages.map((message, index) => (
-              <p key={index} style={{ color: 'red', fontSize: '24px', fontWeight: 'bold' }}>{message}</p>))}
-                  <table>
-                      <thead>
-                          <tr>
-                              <th>File Name</th>
-                              <th>Preview</th>
-                              <th>Date uploaded</th>
-                              <th>Actions</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                      {images.map(image => (
-                        <tr key={image.filename}>
-                            <td>{image.filename}</td>
-                            <td>
-                                <img 
-                                    src={`api/images/galleryImages/${encodeURIComponent(image.filename)}`} 
-                                    alt={image.filename} 
-                                    style={{ width: '200px', height: 'auto' }} 
-                                    onLoad={() => console.log('Image loaded:', image.path)}
-                                    onError={() => console.error('Error loading image:', image.path)}
-                                />
-                            </td>
-                            <td>{new Date(image.dateOfCreation).toLocaleString()}</td>
-                            <td>
-                              <button onClick={() => handleDeleteImage(image.filename)}>DELETE</button> 
-                            </td>
-                        </tr>
+            
+            {isGallery && (
+            <div>
+              <h1>Gallery</h1>
+              <button onClick={handleUploadImage}>Upload Image</button>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setSelectedImage(e.target.files[0])}
+              />
+              {deleteMessages.length > 0 && (
+                <div>
+                  <ul>
+                    {deleteMessages.map((message, index) => (
+                      <li key={index}>{message}</li>
                     ))}
-                      </tbody>
-                  </table>
+                  </ul>
                   
-          </div>}
+                </div>
+                
+              )}
+              <table>
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Filename</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {images.map((src, index) => {
+                    const filename = src.split('/').pop(); // Extract the filename from the image path
+                    return (
+                      <tr key={index}>
+                        <td>
+                          <img
+                            src={src}
+                            alt={`Image ${index}`}
+                            style={{ width: '100px', height: 'auto' }}
+                          />
+                        </td>
+                        <td>{filename}</td>
+                        <td>
+                          <button onClick={() => handleDeleteImage(src)}>Delete</button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {isTeam && (
+            <div>
+              <h1>Team</h1>
+              <input
+                type="text"
+                id="team-title"
+                placeholder="Title"
+              />
+              <input
+                type="text"
+                id="team-name"
+                placeholder="Name"
+              />
+              <input
+                type="file"
+                onChange={(e) => setSelectedTeamImage(e.target.files[0])}
+              />
+              <button onClick={handleUploadTeamImage}>Upload Team Image</button>
+              
+              <table>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Name</th>
+                    <th>Images</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {team.map((member, index) => (
+                    <tr key={index}>
+                      <td>{member.title}</td>
+                      <td>{member.name}</td>
+                      <td>
+                        <img
+                          src={member.imageUrl}
+                          alt={member.title}
+                          style={{ width: '100px', height: 'auto' }}
+                        />
+                      </td>
+                      <td>
+                        <button onClick={() => handleDeleteTeamImage(member.imageUrl)}>Delete</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
 
           {isBlog && <div>
             <h1>Blog Posts</h1>
