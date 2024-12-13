@@ -1,6 +1,9 @@
+[[plugins]]
+  package = "@netlify/plugin-buildbot"
+
+  [plugins.inputs]
+    base = "main"
+
 [build]
-  command = "npm run build"
-  functions = "netlify/functions"
+  command = "ls -al && npm run build"
   publish = "dist"
-
-
