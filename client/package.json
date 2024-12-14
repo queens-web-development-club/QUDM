@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "react-scripts build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@netlify/plugin-nextjs": "^5.7.3",
+    "@netlify/plugin-nextjs": "^5.9.0",
     "@nextui-org/react": "^2.2.10",
     "bcrypt": "^5.1.1",
     "framer-motion": "^11.0.14",
