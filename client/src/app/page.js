@@ -30,7 +30,6 @@ export default function Home() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // Adjust the URL to remove the .js extension and use the correct path
         const response = await fetch('/api/get-stats', {
           method: 'GET',
           headers: {
