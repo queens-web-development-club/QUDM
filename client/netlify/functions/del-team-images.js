@@ -2,7 +2,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 exports.handler = async (event, context) => {
-  if (event.httpMethod !== 'DELETE') {
+  if (event.httpMethod !== 'GET') {  // Change this line to allow GET requests
     return {
       statusCode: 405,
       body: 'Method Not Allowed',
@@ -10,34 +10,18 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { filename } = JSON.parse(event.body);
-
-    if (!filename) {
-      return {
-        statusCode: 400,
-        body: 'No filename provided',
-      };
-    }
-
-    // Remove the "/images/team/" part from the filename to get the correct file path
-    const fileNameWithoutPath = filename.replace('/images/team/', '');
-    const imagePath = path.resolve(__dirname, `../../public/images/team/${fileNameWithoutPath}`);
-
-    // Check if the file exists
-    await fs.access(imagePath);
-
-    // Delete the file
-    await fs.unlink(imagePath);
+    // Logic for getting stats (instead of deleting an image)
+    const stats = await fs.readdir(path.resolve(__dirname, '../../public/images/team/'));
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: `Successfully deleted ${filename}` }),
+      body: JSON.stringify({ stats }),
     };
   } catch (error) {
-    console.error('Error deleting image:', error);
+    console.error('Error fetching stats:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to delete image' }),
+      body: JSON.stringify({ error: 'Failed to fetch stats' }),
     };
   }
 };
