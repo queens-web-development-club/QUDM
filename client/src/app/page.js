@@ -31,7 +31,7 @@ export default function Home() {
     const fetchStats = async () => {
       try {
         // Adjust the URL to remove the .js extension and use the correct path
-        const response = await fetch('/.netlify/functions/get-stats', {
+        const response = await fetch('/api/get-stats', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
