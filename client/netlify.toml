@@ -1,8 +1,8 @@
 [build]
   base = "client"
   command = "npm run build"
-  functions = "netlify/functions"
-  publish = ".next"
+  functions = "client/netlify/functions"
+  publish = "client/.next"
 
 [[redirects]]
   from = "/*"
