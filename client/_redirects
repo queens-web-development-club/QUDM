@@ -1,1 +1,10 @@
 /* /index.html 200
+
+/del-g-images /.netlify/functions/del-g-images  200
+/del-team-images /.netlify/functions/del-team-images  200
+/edit-stats   /.netlify/functions/edit-stats  200
+/get-team   /.netlify/functions/get-team  200
+/get-user  /.netlify/functions/get-user  200
+/post-contact  /.netlify/functions/post-contact  200
+/post-g-images  /.netlify/functions/post-g-images  200
+/post-team-images  /.netlify/functions/post-team-images  200
