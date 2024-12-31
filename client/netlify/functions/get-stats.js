@@ -1,4 +1,4 @@
-// netlify/functions/get-stats.js
+// netlify/functions/get-stats/get-stats.js
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -25,8 +25,8 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Path is now relative to get-stats.js in the functions directory
-    const dataPath = path.join(process.cwd(), 'netlify', 'functions', 'database', 'data.json');
+    // Data file is now in the same directory as the function
+    const dataPath = path.join(__dirname, 'data.json');
     console.log('Attempting to read from:', dataPath);
     
     const rawData = await fs.readFile(dataPath, 'utf8');
@@ -50,7 +50,7 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ 
         error: 'Internal Server Error', 
         details: error.message,
-        path: path.join(process.cwd(), 'netlify', 'functions', 'database', 'data.json')
+        path: __dirname
       })
     };
   }
