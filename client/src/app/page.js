@@ -8,6 +8,7 @@ import Popup from "./components/popup/popup.js";
 import './home.css';
 import React, { useRef, useState, useEffect } from 'react';
 
+import { getApiUrl } from '../../utils/config';
 
 
 
@@ -30,12 +31,12 @@ export default function Home() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('/api/get-stats', {
+        const apiUrl = getApiUrl();
+        const response = await fetch(`${apiUrl}/get-stats`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-          },
-          credentials: 'same-origin' // or 'include' depending on your setup
+          }
         });
   
         if (!response.ok) {
@@ -43,8 +44,6 @@ export default function Home() {
         }
   
         const statsData = await response.json();
-        console.log(statsData);
-  
         const statsArray = Object.entries(statsData).map(([key, value]) => ({ id: key, data: value }));
         setStats(statsArray);
       } catch (error) {

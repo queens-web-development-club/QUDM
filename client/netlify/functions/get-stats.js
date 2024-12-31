@@ -1,8 +1,8 @@
+// netlify/functions/get-stats.js
 const fs = require('fs').promises;
 const path = require('path');
 
 exports.handler = async (event, context) => {
-  // Handle CORS preflight requests
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 204,
@@ -14,7 +14,6 @@ exports.handler = async (event, context) => {
     };
   }
 
-  // Only allow GET requests
   if (event.httpMethod !== 'GET') {
     return { 
       statusCode: 405, 
@@ -26,9 +25,10 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Correct path to 'data.json' based on your folder structure
-    const dataPath = path.resolve(__dirname, 'database/data.json');
-    console.log('Data path:', dataPath); // Log the resolved path for debugging
+    // Path is now relative to get-stats.js in the functions directory
+    const dataPath = path.join(process.cwd(), 'netlify', 'functions', 'database', 'data.json');
+    console.log('Attempting to read from:', dataPath);
+    
     const rawData = await fs.readFile(dataPath, 'utf8');
     const jsonData = JSON.parse(rawData);
 
@@ -47,7 +47,11 @@ exports.handler = async (event, context) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({ error: 'Internal Server Error' })
+      body: JSON.stringify({ 
+        error: 'Internal Server Error', 
+        details: error.message,
+        path: path.join(process.cwd(), 'netlify', 'functions', 'database', 'data.json')
+      })
     };
   }
 };

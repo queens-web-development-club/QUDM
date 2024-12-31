@@ -1,10 +1,21 @@
 [build]
   base = "client"
   command = "npm run build"
-  functions = "client/netlify/functions" 
+  functions = "netlify/functions"  # Remove 'client/' prefix
   publish = ".next"
+
+[dev]
+  framework = "next"
+  targetPort = 3000
+  port = 8888
+  publish = "public"
 
 [[redirects]]
   from = "/*"
   to = "/"
+  status = 200
+
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
   status = 200

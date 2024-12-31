@@ -10,7 +10,7 @@ const PagesTeam = () => {
 
   const fetchTeam = async () => {
     try {
-      const response = await fetch("/api/get-team");
+      const response = await fetch("/.netlify/functions/get-team");
       if (!response.ok) {
         throw new Error("Failed to fetch team");
       }
