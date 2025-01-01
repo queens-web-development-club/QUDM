@@ -4,15 +4,23 @@ import Image from "next/image";
 import './team.css';
 import Nav from "../components/nav/nav.js";
 import Footer from "../components/footer/footer";
+import { getApiUrl } from '../../utils/config';
 
 const PagesTeam = () => {
   const [team, setTeam] = useState([]);
 
   const fetchTeam = async () => {
     try {
-      const response = await fetch("/.netlify/functions/get-team");
+      const apiUrl = getApiUrl();
+      const response = await fetch(`${apiUrl}/get-team`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      
       if (!response.ok) {
-        throw new Error("Failed to fetch team");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       const teamData = await response.json();
       setTeam(teamData);
