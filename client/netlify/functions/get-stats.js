@@ -1,8 +1,15 @@
-// netlify/functions/get-stats/get-stats.js
 const fs = require('fs').promises;
 const path = require('path');
 
 exports.handler = async (event, context) => {
+
+  console.log({
+    filename: __filename,
+    dirname: __dirname,
+    functionDir: path.dirname(__filename),
+    attemptedDataPath: path.join(path.dirname(__filename), 'data.json')
+  });
+
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 204,
@@ -25,8 +32,9 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Data file is now in the same directory as the function
-    const dataPath = path.join(__dirname, 'data.json');
+    // Update path to look in the same directory as the function
+    const functionDir = path.dirname(__filename);
+    const dataPath = path.join(functionDir, 'data.json');
     console.log('Attempting to read from:', dataPath);
     
     const rawData = await fs.readFile(dataPath, 'utf8');
@@ -50,7 +58,8 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ 
         error: 'Internal Server Error', 
         details: error.message,
-        path: __dirname
+        functionDir: path.dirname(__filename),
+        attemptedPath: path.join(path.dirname(__filename), 'data.json')
       })
     };
   }
