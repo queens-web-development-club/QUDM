@@ -17,4 +17,6 @@
 
 [functions]
   directory = "netlify/functions"
-  included_files = ["netlify/functions/data.json"]
+  included_files = [
+    "netlify/functions/data.json",
+    "public/images/**" ]
