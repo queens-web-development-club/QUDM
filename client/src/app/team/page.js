@@ -1,6 +1,5 @@
 "use client"
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import './team.css';
 import Nav from "../components/nav/nav.js";
 import Footer from "../components/footer/footer";
@@ -43,11 +42,9 @@ const PagesTeam = () => {
           {team.map((member, index) => (
             <div key={index} className="team-member-card">
               <div className="team-member-image-wrapper">
-                <Image
+                <img
                   src={member.imageUrl}
                   alt={member.name}
-                  layout="fill"
-                  objectFit="cover"
                   className="team-member-image"
                 />
               </div>
