@@ -4,7 +4,7 @@ import Image from "next/image";
 import './team.css';
 import Nav from "../components/nav/nav.js";
 import Footer from "../components/footer/footer";
-import { getApiUrl } from '../../utils/config';
+import { getApiUrl } from '../../../utils/config';
 
 const PagesTeam = () => {
   const [team, setTeam] = useState([]);
