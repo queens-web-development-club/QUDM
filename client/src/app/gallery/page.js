@@ -3,6 +3,7 @@ import './gallery.css';
 import Nav from "../components/nav/nav.js";
 import Footer from "../components/footer/footer.js";
 import React, { useState, useEffect } from 'react';
+import { getApiUrl } from '../../../utils/config';
 
 export default function Gallery() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -29,16 +30,22 @@ export default function Gallery() {
   };
 
   useEffect(() => {
-    // Fetch the images from the serverless function
     const fetchImages = async () => {
       try {
-        const response = await fetch('/.netlify/functions/get-g-images');
+        const apiUrl = getApiUrl();
+        const response = await fetch(`${apiUrl}/get-g-images`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
         if (!response.ok) {
-          throw new Error('Failed to fetch images');
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const imagePaths = await response.json();
-        setImageSrcs(imagePaths); // Set the image paths to state
+        setImageSrcs(imagePaths);
       } catch (error) {
         console.error('Error fetching images:', error);
       }
@@ -63,6 +70,7 @@ export default function Gallery() {
     </div>
   );
 }
+
 
 const GalleryContainer = ({ handleImageClick, imageSrcs }) => {
   return (
