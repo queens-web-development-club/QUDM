@@ -1,49 +1,47 @@
 "use client"
 
-// pages/login.js
 import { useState } from 'react';
 import { useAuth } from '../auth/authContext';
-
-//next redirect library
-import { useRouter } from 'next/navigation'
-
+import { useRouter } from 'next/navigation';
+import { getApiUrl } from '../../../utils/config';
 import "./login.css";
 
 const Login = () => {
-
   const router = useRouter()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [error, setError] = useState('');
   const auth = useAuth();
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    setError('');
+
     try {
-      // Make post request to Netlify function endpoint
-      const response = await fetch('/.netlify/functions/get-login', {
+      const apiUrl = getApiUrl();
+      const response = await fetch(`${apiUrl}/get-login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json' 
+        },
         body: JSON.stringify({ email, password }),
       });
-  
-      if (response.status === 200) {
-        console.log("Login successful, status: 200");
-  
-        // Update auth context
+
+      if (response.ok) {
+        console.log("Login successful");
         auth.login();
-  
-        // Log to check if auth context is updated
-        console.log('Auth context after login:', auth);
-  
-        // Redirect to /admin
-        console.log('Redirecting to /admin');
         router.push('/admin');
       } else {
-        alert('Improper Email or Password');
+        const data = await response.json();
+        if (response.status === 401) {
+          setError('Invalid email or password');
+        } else {
+          setError(data.message || 'An error occurred');
+        }
       }
     } catch (err) {
       console.error('Login error:', err);
+      setError('Failed to connect to the server');
     }
   };
 
@@ -56,6 +54,8 @@ const Login = () => {
         </div>
 
         <form className="form-main" onSubmit={handleLogin}>
+          {error && <div className="error-message">{error}</div>}
+          
           <label>
             <h1>Username:</h1>
             <input
@@ -80,7 +80,6 @@ const Login = () => {
         </form>
       </div>
     </div>
-    
   );
 };
 

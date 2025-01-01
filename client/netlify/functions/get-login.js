@@ -3,46 +3,96 @@ const fs = require('fs').promises;
 const path = require('path');
 
 exports.handler = async (event, context) => {
-  // Only allow POST requests
+  console.log('Environment:', {
+    lambda_task_root: process.env.LAMBDA_TASK_ROOT,
+    pwd: process.cwd(),
+    dirname: __dirname,
+    filename: __filename
+  });
+
+  // Handle CORS
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    };
+  }
+
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
       body: JSON.stringify({ message: 'Method Not Allowed' })
     };
   }
 
   try {
-    // Parse the incoming request body
     const { email, password } = JSON.parse(event.body);
 
-    // Validate input
     if (!email || !password) {
       return {
         statusCode: 400,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
         body: JSON.stringify({ message: 'Email and password are required' })
       };
     }
 
-    // Read the data file
-    const dataPath = path.join(__dirname, '../functions/database/data.json');
-    const data = await fs.readFile(dataPath, 'utf8');
-    const jsonData = JSON.parse(data);
+    // Try multiple possible paths for data.json
+    const possiblePaths = [
+      path.join(__dirname, 'data.json'),
+      path.join(process.cwd(), 'data.json'),
+      path.join(process.env.LAMBDA_TASK_ROOT || '', 'data.json'),
+      './data.json'
+    ];
 
-    // First, hash the incoming password to compare with stored hash
+    let jsonData;
+    let usedPath;
+
+    for (const dataPath of possiblePaths) {
+      try {
+        console.log('Attempting to read from:', dataPath);
+        const data = await fs.readFile(dataPath, 'utf8');
+        jsonData = JSON.parse(data);
+        usedPath = dataPath;
+        console.log('Successfully read from:', dataPath);
+        break;
+      } catch (err) {
+        console.log(`Failed to read from ${dataPath}:`, err.message);
+        continue;
+      }
+    }
+
+    if (!jsonData) {
+      throw new Error('Could not find data.json in any of the expected locations');
+    }
+
     const isValidCredentials = await bcrypt.compare(
       password, 
       jsonData.auth.passwordHash
     );
 
-    // Check if credentials are valid
     if (email === jsonData.auth.email && isValidCredentials) {
       return {
         statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
         body: JSON.stringify({ message: 'Login successful' })
       };
     } else {
       return {
         statusCode: 401,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
         body: JSON.stringify({ message: 'Invalid credentials' })
       };
     }
@@ -50,13 +100,19 @@ exports.handler = async (event, context) => {
     console.error('Login error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Internal Server Error' })
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({ 
+        message: 'Internal Server Error',
+        details: error.message,
+        environment: {
+          lambda_task_root: process.env.LAMBDA_TASK_ROOT,
+          pwd: process.cwd(),
+          dirname: __dirname,
+          filename: __filename
+        }
+      })
     };
   }
 };
-
-// Utility function to hash password (use this when initially setting up or changing password)
-async function hashPassword(password) {
-  const saltRounds = 10;
-  return await bcrypt.hash(password, saltRounds);
-}
