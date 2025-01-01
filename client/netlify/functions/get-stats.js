@@ -2,12 +2,11 @@ const fs = require('fs').promises;
 const path = require('path');
 
 exports.handler = async (event, context) => {
-
-  console.log({
-    filename: __filename,
+  console.log('Lambda environment:', {
+    lambda_task_root: process.env.LAMBDA_TASK_ROOT,
+    pwd: process.cwd(),
     dirname: __dirname,
-    functionDir: path.dirname(__filename),
-    attemptedDataPath: path.join(path.dirname(__filename), 'data.json')
+    filename: __filename
   });
 
   if (event.httpMethod === 'OPTIONS') {
@@ -32,12 +31,34 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Update path to look in the same directory as the function
-    const functionDir = path.dirname(__filename);
-    const dataPath = path.join(functionDir, 'data.json');
-    console.log('Attempting to read from:', dataPath);
-    
-    const rawData = await fs.readFile(dataPath, 'utf8');
+    // Try multiple possible paths for data.json
+    const possiblePaths = [
+      path.join(__dirname, 'data.json'),
+      path.join(process.cwd(), 'data.json'),
+      path.join(process.env.LAMBDA_TASK_ROOT || '', 'data.json'),
+      './data.json'
+    ];
+
+    let rawData;
+    let usedPath;
+
+    // Try each path until we find the file
+    for (const dataPath of possiblePaths) {
+      try {
+        console.log('Attempting to read from:', dataPath);
+        rawData = await fs.readFile(dataPath, 'utf8');
+        usedPath = dataPath;
+        break;
+      } catch (err) {
+        console.log(`Failed to read from ${dataPath}:`, err.message);
+        continue;
+      }
+    }
+
+    if (!rawData) {
+      throw new Error('Could not find data.json in any of the expected locations');
+    }
+
     const jsonData = JSON.parse(rawData);
 
     return {
@@ -58,8 +79,12 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ 
         error: 'Internal Server Error', 
         details: error.message,
-        functionDir: path.dirname(__filename),
-        attemptedPath: path.join(path.dirname(__filename), 'data.json')
+        environment: {
+          lambda_task_root: process.env.LAMBDA_TASK_ROOT,
+          pwd: process.cwd(),
+          dirname: __dirname,
+          filename: __filename
+        }
       })
     };
   }

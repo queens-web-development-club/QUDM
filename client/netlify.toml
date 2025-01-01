@@ -14,3 +14,7 @@
   from = "/*"
   to = "/"
   status = 200
+
+[functions]
+  directory = "netlify/functions"
+  included_files = ["netlify/functions/data.json"]
